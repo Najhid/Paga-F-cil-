@@ -1,6 +1,8 @@
+[SPEC.md](https://github.com/user-attachments/files/34494239/SPEC.md)
+
 # SPEC: PagaFácil
 
-Last updated: 2026-11-03 · Owners: Angel Najhid Flores Cartagena + Luciano Yitani Chapa
+Last updated: 2026-11-06 · Owners: Angel Najhid Flores Cartagena + Luciano Yitani Chapa
 
 ## Problem
 University students in Mexico often have no credit card and a thin credit history, so they
@@ -35,8 +37,8 @@ User has Loans; Merchant has Loans; each Loan has Installments.
   fee), total interest, total to repay, status (approved / active / paid / defaulted).
 - **Installment:** loan, number, due date, amount, status (pending / paid / late), paid date.
 
-Pricing rule: flat interest of 2% per month of term on the original price (3 months = 6%,
-6 = 12%, 9 = 18%, 12 = 24%).
+Pricing rule: flat interest of 4% per month of term on the original price (3 months = 12%,
+6 = 24%, 9 = 36%, 12 = 48%).
 
 ## Dependencies (closed list)
 Anything not on this list needs both partners plus a bitacora entry.
@@ -66,15 +68,21 @@ servicing cost. Base case is the 6-month plan:
 
 | Term | Total interest | Effective annual rate (approx.) | Contribution per loan |
 |---|---|---|---|
-| 3 months | 6% | ~42% | ~$45 |
-| 6 months | 12% | ~48% | ~$163 |
-| 9 months | 18% | ~50% | ~$280 |
-| 12 months | 24% | ~51% | ~$397 |
+| 3 months | 12% | ~98% | ~$193 |
+| 6 months | 24% | ~113% | ~$462 |
+| 9 months | 36% | ~116% | ~$731 |
+| 12 months | 48% | ~116% | ~$1,000 |
 
-- LTV (6-month base) = $163 × 3 loans ≈ $490; LTV ÷ CAC ≈ 2.7x.
-- Payback: CAC is recovered during the second loan (first loan contributes $163 vs CAC $180).
-- Break-even: about 740 loans per year (about 370 customers at 2 loans per year).
-- Open decision: keep or drop the 3-month plan (almost no margin).
+- LTV (6-month base) = $462 × 3 loans ≈ $1,390; LTV ÷ CAC ≈ 7.7x.
+- Payback: CAC is recovered within the first loan for every term (first loan contributes
+  $193 to $1,000 vs CAC $180; the 3-month plan is the tightest case).
+- Break-even: about 260 loans per year in the 6-month base case (about 130 customers at 2
+  loans per year). Worst case, if every customer chose the 3-month plan: about 620 loans
+  per year (about 310 customers at 2 loans per year).
+- Open decision: keep or drop the 3-month plan (it now recovers CAC but is still the
+  lowest margin).
+- Risk: the 5% default rate is an assumption that may rise with higher prices
+  (TODO-verify with a sensitivity test in `economics.py`).
 - Effective annual rate is the cost to the user and must be shown to them as CAT.
   TODO-verify the CAT calculation and disclosure rules with Condusef.
 
@@ -87,3 +95,4 @@ servicing cost. Base case is the 6-month plan:
 | Date | Change | Why | Approved by |
 |---|---|---|---|
 | 2026-11-03 | Initial SPEC drafted | Project restarted with corrected unit economics | 2026-11-04|
+| 2026-11-06 | Flat interest raised from 2% to 4% per month of term; economics table, LTV, payback and break-even recomputed | Every term must recover CAC in the first loan and lower the break-even volume | 2026-11-06 |
