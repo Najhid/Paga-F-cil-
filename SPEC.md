@@ -94,5 +94,5 @@ servicing cost. Base case is the 6-month plan:
 ## Changelog
 | Date | Change | Why | Approved by |
 |---|---|---|---|
-| 2026-11-03 | Initial SPEC drafted | Project restarted with corrected unit economics | 2026-11-04|
-| 2026-11-06 | Flat interest raised from 2% to 4% per month of term; economics table, LTV, payback and break-even recomputed | Every term must recover CAC in the first loan and lower the break-even volume | 2026-11-06 |
+| 2026-11-03 | Initial SPEC drafted | Project restarted with corrected unit economics | Najhid + Luciano|
+| 2026-11-06 | Flat interest raised from 2% to 4% per month of term; economics table, LTV, payback and break-even recomputed | Every term must recover CAC in the first loan and lower the break-even volume | Najhid + Luciano  |
