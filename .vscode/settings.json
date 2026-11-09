@@ -29,3 +29,6 @@
   }
  
   // NOTE: there is also a global "chat.tools.autoApprove" (approve EVERYTHING).
+    // That is dial position 3. It stays OFF on your laptop; use it only inside a
+  // disposable GitHub Codespace.
+}
