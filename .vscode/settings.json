@@ -1,4 +1,6 @@
 // FIN506 agent profile: VS Code + GitHub Copilot, autonomy dial position 2
+// "Dial position 2" means only safe terminal commands are auto-approved (see below).
+// "Dial position 3" would auto-approve all commands (not recommended except in disposable environments).
 // Goes in .vscode/settings.json (Workspace Settings JSON).
 // Setting names move between VS Code versions. If a key shows as unknown, search
 // Settings (UI) for "terminal auto approve" and mirror these rules there.
@@ -26,9 +28,10 @@
     "/^git (push|reset --hard|clean)\\b/": false,
     "/^(curl|wget|Invoke-WebRequest|iwr|Invoke-RestMethod)\\b/": false,
     "/^(npm|pnpm|yarn|pip|pip3|py -m pip|python3? -m pip) (i|install|add|uninstall)\\b/": false
-  }
+  },
  
   // NOTE: there is also a global "chat.tools.autoApprove" (approve EVERYTHING).
     // That is dial position 3. It stays OFF on your laptop; use it only inside a
   // disposable GitHub Codespace.
 }
+
