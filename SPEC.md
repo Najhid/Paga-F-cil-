@@ -1,4 +1,3 @@
-[SPEC.md](https://github.com/user-attachments/files/34494239/SPEC.md)
 
 # SPEC: PagaFácil
 
