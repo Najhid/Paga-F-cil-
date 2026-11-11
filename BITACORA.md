@@ -34,3 +34,9 @@ Reviewer flags: none yet, the reviewer is not set up. Regulatory figures in SPEC
 - We decided: replaced the three files through a pull request and removed the stray link from SPEC.md; the old 2% line stays in DECISIONS.md because the log is append-only, and the new lines supersede it.
 - Reviewer flags: reviewer not run on this change (documentation only). Claude flagged that the 4% price was chosen so every term recovers CAC, and that the 5% default assumption may be too low at about 113% effective annual rate; the sensitivity test in economics.py should vary price and default together. Numeric items stay with Luciano.
 - Still open: approval rule (maximum installment share and credit limit), CAT disclosure, regulatory TODO-verify items.
+
+## 2026-11-11 · Najhid
+- Goal: implement the first checkout slice on `checkout-pricing`, showing the example cart's price across all four terms.
+- AI did: Copilot added the Flask checkout page, Decimal-based pricing, monthly installment schedules, and tests under `src/`; updated README run instructions. All 15 tests pass.
+- We decided: monthly due dates start one month after checkout on the same calendar day, using the month's last day when needed. The final installment absorbs cent rounding so scheduled payments equal the total.
+- Reviewer flags: the reviewer identified the missing schedule and the possibility that rounded installments would not sum to the total; both were addressed and tested. CAT/effective annual rate remains TODO-verify per SPEC.md and is not included in this slice.

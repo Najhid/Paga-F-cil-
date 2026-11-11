@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PagaFácil checkout quote</title>
+  </head>
+  <body>
+    <main>
+      <h1>Checkout quote</h1>
+      <p>Example bookstore cart: {{ cart_total|mxn }}</p>
+      <table>
+        <caption>Choose a payment term to compare the full cost</caption>
+        <thead>
+          <tr>
+            <th scope="col">Term</th>
+            <th scope="col">Interest</th>
+            <th scope="col">Total to repay</th>
+            <th scope="col">Regular monthly payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for quote in quotes %}
+          <tr>
+            <th scope="row">{{ quote.term_months }} months</th>
+            <td>{{ quote.interest|mxn }}</td>
+            <td>{{ quote.total_repayment|mxn }}</td>
+            <td>{{ quote.monthly_payment|mxn }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p>The final installment is adjusted for rounding so all installments add up to the total.</p>
+      <h2>Payment schedules</h2>
+      {% for quote in quotes %}
+      <details>
+        <summary>{{ quote.term_months }}-month schedule</summary>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Installment</th>
+              <th scope="col">Due date</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for installment in quote.installments %}
+            <tr>
+              <th scope="row">{{ installment.number }}</th>
+              <td>{{ installment.due_date.isoformat() }}</td>
+              <td>{{ installment.amount|mxn }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </details>
+      {% endfor %}
+    </main>
+  </body>
+</html>
