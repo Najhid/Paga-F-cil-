@@ -10,18 +10,17 @@
   // Regex entries are wrapped in slashes; plain entries match the command prefix.
   "chat.tools.terminal.autoApprove": {
     // read-only inspection
-    "/^(ls|dir|pwd|type|cat|Get-ChildItem|Get-Content)\\b/": true,
+    "/^(ls|dir|pwd|Get-ChildItem)\\b/": true,
     "/^git (status|diff|log|show)\\b/": true,
     "node --version": true,
     "python --version": true,
     "python3 --version": true,
  
     // tests and linters
-    "/^(python3?|py) -m (pytest|unittest)\\b/": true,
-    "/^(npm|pnpm) (test|run lint|run test)\\b/": true,
+    "/^(python3?|py) -m (pytest|unittest)\\b/": true, 
  
     // local git bookkeeping (no publishing)
-    "/^git (add|commit|branch|checkout|restore --staged)\\b/": true,
+    "/^git (add|commit|branch|restore --staged)\\b/": true,
  
     // ALWAYS show a card for these, even if a broader rule matches
     "/^(rm|del|rmdir|Remove-Item)\\b/": false,
