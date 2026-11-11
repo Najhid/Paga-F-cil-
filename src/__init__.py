@@ -1,0 +1,1 @@
+"""PagaFácil application package."""

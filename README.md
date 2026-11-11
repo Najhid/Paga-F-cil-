@@ -22,19 +22,27 @@ bookstore at the start of the semester, and can only afford them in monthly paym
 4. If approved, the payout to the merchant (price minus the 4% fee) and the installment schedule are recorded; León can mark installments as paid or late and see his balance.
 
 ## How to run it
-TODO: fill in once the first version of the app exists. Planned stack: Python 3, Flask,
-SQLite, pytest.
+The checkout quote uses the example cart and pricing assumptions in `src/config.py`. Its
+payment schedule starts one month after checkout on the same calendar day; if that day
+does not exist in a month, the due date is the month's final day. Start the Flask app from
+the repository root:
 
 ```
-# 1. Clone the repo and open the folder
-# 2. Create a virtual environment and install dependencies   TODO: exact commands
-# 3. Load the invented seed data                              TODO: exact command
-# 4. Start the app                                            TODO: exact command
-# 5. Open the URL it prints in your browser
+source .venv/bin/activate
+python -m src.app
 ```
+
+Open the local URL printed by Flask in your browser. This slice shows the checkout quote
+and payment schedule; loan approval, persistence, and payment tracking are not implemented
+yet. The CAT/effective annual rate is not shown because its calculation and disclosure
+remain marked TODO-verify in `SPEC.md`.
 
 ## How to run the tests
-TODO: `python3 -m pytest` once tests exist.
+With the virtual environment active, run:
+
+```
+python -m pytest
+```
 
 ## Unit economics
 The model computes contribution per loan, LTV, CAC and payback from the data model (see
