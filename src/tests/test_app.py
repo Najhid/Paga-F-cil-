@@ -1,5 +1,14 @@
 from datetime import date
 
+from decimal import Decimal
+def test_format_mxn_keeps_two_decimals_when_there_are_cents():
+    assert checkout_app.format_mxn(Decimal("516.50")) == "$516.50 MXN"
+    assert checkout_app.format_mxn(Decimal("0.50")) == "$0.50 MXN"
+
+
+def test_format_mxn_drops_decimals_for_whole_amounts():
+    assert checkout_app.format_mxn(Decimal("2800.00")) == "$2,800 MXN"
+
 import src.app as checkout_app
 from pytest import MonkeyPatch
 
