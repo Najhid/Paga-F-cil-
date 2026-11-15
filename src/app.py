@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.template_filter("mxn")
 def format_mxn(amount: Decimal) -> str:
-        formatted = f"{amount:,.2f}"
+    formatted = f"{amount:,.2f}"
     if formatted.endswith(".00"):
         formatted = formatted[:-3]
     return f"${formatted} MXN"
