@@ -34,7 +34,8 @@ python -m src.app
 
 Open the local URL printed by Flask in your browser. This slice shows the checkout quote
 and payment schedule; loan approval, persistence, and payment tracking are not implemented
-yet. The CAT/effective annual rate is not shown because its calculation and disclosure
+yet. The effective annual rate that `SPEC.md` requires on the quote screen is not shown yet;
+its CAT calculation and disclosure rules remain marked TODO-verify in `SPEC.md`.
 remain marked TODO-verify in `SPEC.md`.
 
 ## How to run the tests
