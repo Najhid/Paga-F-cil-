@@ -40,3 +40,8 @@ Reviewer flags: none yet, the reviewer is not set up. Regulatory figures in SPEC
 - AI did: Copilot added the Flask checkout page, Decimal-based pricing, monthly installment schedules, and tests under `src/`; updated README run instructions. All 15 tests pass.
 - We decided: monthly due dates start one month after checkout on the same calendar day, using the month's last day when needed. The final installment absorbs cent rounding so scheduled payments equal the total.
 - Reviewer flags: the reviewer identified the missing schedule and the possibility that rounded installments would not sum to the total; both were addressed and tested. CAT/effective annual rate remains TODO-verify per SPEC.md and is not included in this slice.
+
+## 2026-11-14 · Najhid + Luciano
+- Goal: apply the small fixes found in the repo review (money formatting, config comments, reviewer path decision) and add PROJECT_METHOD.md.
+- AI did: Claude Sonnet 5.5 (claude.ai chat, not agent mode) reviewed the repo zip: it ran the 15 tests in a clean environment, recomputed prices and installment schedules, and found format_mxn showing $516.5 instead of $516.50, a duplicate SPEC2.md and missing comments in config.py. It gave us the code and comment changes step by step. <If Copilot applied or checked any of them, say exactly which and with what model.>
+- We decided: added PROJECT_METHOD.md unchanged from the course version; fixed format_mxn and added two tests (17 tests pass); commented the constants in config.py; recorded in DECISIONS.md why the reviewer lives in .github/agents/. The minus sign in SPEC.md and the port change wait: the first until Luciano's updated SPEC is merged, the second only if the app fails to start.
