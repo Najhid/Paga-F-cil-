@@ -45,3 +45,17 @@ def test_checkout_displays_all_example_quotes(monkeypatch: MonkeyPatch) -> None:
     assert "2026-03-31" in page
     assert "2026-04-30" in page
     assert "final installment is adjusted for rounding" in page
+
+
+def test_checkout_shows_effective_annual_rate_and_disclaimer() -> None:
+    response = checkout_app.app.test_client().get("/")
+    page = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert "Effective annual rate (reference)" in page
+    assert "113.3%" in page
+    assert "not the official CAT" in page
+
+
+def test_format_percent_uses_one_decimal() -> None:
+    assert checkout_app.format_percent(Decimal("113.33")) == "113.3%"
