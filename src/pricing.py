@@ -24,6 +24,8 @@ class PriceQuote:
     total_repayment: Decimal
     monthly_payment: Decimal
     installments: tuple[InstallmentQuote, ...]
+    # Reference cost on the balance still owed, in percent per year (see effective_annual_rate).
+    effective_annual_rate: Decimal
 
 
 def add_months(start_date: date, months: int) -> date:
@@ -32,6 +34,47 @@ def add_months(start_date: date, months: int) -> date:
     month = zero_based_month + 1
     day = min(start_date.day, monthrange(year, month)[1])
     return date(year, month, day)
+
+
+def effective_annual_rate(
+    principal: Decimal, payments: tuple[Decimal, ...]
+) -> Decimal:
+    """Return the annualized internal rate of return of the customer's payments, in percent.
+
+    What it computes: the monthly rate r for which the present value of the scheduled
+    payments (one per month, starting one month after checkout) equals the price the
+    customer receives today, annualized as (1 + r)^12 - 1.
+
+    Why this formula: flat interest on the original price hides the real cost, because the
+    customer repays part of the principal every month and so owes less than the full price
+    for most of the term. The internal rate of return measures the cost on the balance
+    actually owed. This is a reference figure, not the official CAT (Banxico Circular
+    21/2009), which includes every cost of the credit. TODO-verify the CAT with Condusef.
+    """
+    if principal <= ZERO or not payments:
+        raise ValueError("Principal and payments are required.")
+
+    def present_value(monthly_rate: Decimal) -> Decimal:
+        return sum(
+            (
+                payment / (Decimal(1) + monthly_rate) ** month
+                for month, payment in enumerate(payments, start=1)
+            ),
+            ZERO,
+        )
+
+    # present_value falls as the rate rises, so a bisection finds the rate where it equals
+    # the principal. The upper bound of 100% per month is far above any price we offer.
+    low, high = ZERO, Decimal(1)
+    for _ in range(100):
+        middle = (low + high) / 2
+        if present_value(middle) > principal:
+            low = middle
+        else:
+            high = middle
+    monthly_rate = (low + high) / 2
+    annual_rate = ((Decimal(1) + monthly_rate) ** 12 - Decimal(1)) * 100
+    return annual_rate.quantize(CENT, rounding=ROUND_HALF_UP)
 
 
 def calculate_quote(
@@ -66,4 +109,7 @@ def calculate_quote(
         total_repayment=total_repayment,
         monthly_payment=monthly_payment,
         installments=installments,
+        effective_annual_rate=effective_annual_rate(
+            cart_total, tuple(installment.amount for installment in installments)
+        ),
     )
