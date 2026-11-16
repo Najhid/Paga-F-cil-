@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from src.pricing import add_months, calculate_quote
+from src.pricing import add_months, calculate_quote, effective_annual_rate
 
 
 @pytest.mark.parametrize(
@@ -56,3 +56,28 @@ def test_calculate_quote_rejects_invalid_cart_total(cart_total: Decimal) -> None
 def test_calculate_quote_rejects_unsupported_term(term_months: int) -> None:
     with pytest.raises(ValueError, match="Term must be one of"):
         calculate_quote(Decimal("2500.00"), term_months, date(2026, 1, 15))
+
+
+@pytest.mark.parametrize(
+    ("term_months", "expected_rate"),
+    [(3, 98.7), (6, 113.3), (9, 116.2), (12, 115.7)],
+)
+def test_effective_annual_rate_for_example_cart(
+    term_months: int, expected_rate: float
+) -> None:
+    quote = calculate_quote(Decimal("2500.00"), term_months, date(2026, 1, 15))
+
+    assert float(quote.effective_annual_rate) == pytest.approx(expected_rate, abs=0.1)
+
+
+def test_effective_annual_rate_known_case() -> None:
+    # Paying 110 one month after receiving 100 is 10% per month, so 1.1^12 - 1 = 213.84%.
+    rate = effective_annual_rate(Decimal("100"), (Decimal("110"),))
+
+    assert float(rate) == pytest.approx(213.84, abs=0.01)
+
+
+def test_effective_annual_rate_is_zero_without_interest() -> None:
+    rate = effective_annual_rate(Decimal("100"), (Decimal("50"), Decimal("50")))
+
+    assert rate == Decimal("0.00")
