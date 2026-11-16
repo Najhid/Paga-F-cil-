@@ -3,7 +3,14 @@ from decimal import Decimal
 
 from flask import Flask, render_template
 
-from src.config import EXAMPLE_CART_TOTAL, TERMS_MONTHS
+from src.approval import decide_loan
+from src.config import (
+    CREDIT_LIMIT,
+    DECLARED_MONTHLY_INCOME,
+    EXAMPLE_CART_TOTAL,
+    MAX_INSTALLMENT_SHARE_OF_INCOME,
+    TERMS_MONTHS,
+)
 from src.pricing import calculate_quote
 
 
@@ -30,10 +37,18 @@ def checkout():
         calculate_quote(EXAMPLE_CART_TOTAL, term_months, checkout_date)
         for term_months in TERMS_MONTHS
     ]
+    decisions = {
+        quote.term_months: decide_loan(EXAMPLE_CART_TOTAL, quote.monthly_payment)
+        for quote in quotes
+    }
     return render_template(
         "checkout.html",
         cart_total=EXAMPLE_CART_TOTAL,
         quotes=quotes,
+        decisions=decisions,
+        declared_income=DECLARED_MONTHLY_INCOME,
+        credit_limit=CREDIT_LIMIT,
+        max_monthly_payment=DECLARED_MONTHLY_INCOME * MAX_INSTALLMENT_SHARE_OF_INCOME,
     )
 
 
