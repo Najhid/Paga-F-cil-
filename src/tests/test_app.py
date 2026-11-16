@@ -59,3 +59,19 @@ def test_checkout_shows_effective_annual_rate_and_disclaimer() -> None:
 
 def test_format_percent_uses_one_decimal() -> None:
     assert checkout_app.format_percent(Decimal("113.33")) == "113.3%"
+
+
+def test_checkout_approves_the_example_cart_for_every_term() -> None:
+    page = checkout_app.app.test_client().get("/").get_data(as_text=True)
+
+    assert page.count("Approved") == 4
+    assert "Rejected" not in page
+
+
+def test_checkout_rejects_a_cart_above_the_credit_limit(monkeypatch: MonkeyPatch) -> None:
+    monkeypatch.setattr(checkout_app, "EXAMPLE_CART_TOTAL", Decimal("8000.00"))
+
+    page = checkout_app.app.test_client().get("/").get_data(as_text=True)
+
+    assert page.count("Rejected") == 4
+    assert "above the credit limit" in page
