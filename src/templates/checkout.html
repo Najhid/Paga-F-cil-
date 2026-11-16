@@ -9,6 +9,7 @@
     <main>
       <h1>Checkout quote</h1>
       <p>Example bookstore cart: {{ cart_total|mxn }}</p>
+      <p>Declared monthly income: {{ declared_income|mxn }}. Credit limit: {{ credit_limit|mxn }}. Maximum monthly payment: {{ max_monthly_payment|mxn }}.</p>
       <table>
         <caption>Choose a payment term to compare the full cost</caption>
         <thead>
@@ -18,6 +19,7 @@
             <th scope="col">Total to repay</th>
             <th scope="col">Regular monthly payment</th>
             <th scope="col">Effective annual rate (reference)</th>
+            <th scope="col">Decision</th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +30,8 @@
             <td>{{ quote.total_repayment|mxn }}</td>
             <td>{{ quote.monthly_payment|mxn }}</td>
             <td>{{ quote.effective_annual_rate|pct }}</td>
+            {% set decision = decisions[quote.term_months] %}
+            <td>{% if decision.approved %}Approved{% else %}Rejected: {{ decision.reasons|join(" ") }}{% endif %}</td>
           </tr>
           {% endfor %}
         </tbody>
