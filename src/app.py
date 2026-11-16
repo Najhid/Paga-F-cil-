@@ -18,6 +18,11 @@ def format_mxn(amount: Decimal) -> str:
     return f"${formatted} MXN"
 
 
+@app.template_filter("pct")
+def format_percent(value: Decimal) -> str:
+    return f"{value:,.1f}%"
+
+
 @app.get("/")
 def checkout():
     checkout_date = date.today()
