@@ -17,6 +17,7 @@
             <th scope="col">Interest</th>
             <th scope="col">Total to repay</th>
             <th scope="col">Regular monthly payment</th>
+            <th scope="col">Effective annual rate (reference)</th>
           </tr>
         </thead>
         <tbody>
@@ -26,11 +27,13 @@
             <td>{{ quote.interest|mxn }}</td>
             <td>{{ quote.total_repayment|mxn }}</td>
             <td>{{ quote.monthly_payment|mxn }}</td>
+            <td>{{ quote.effective_annual_rate|pct }}</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
       <p>The final installment is adjusted for rounding so all installments add up to the total.</p>
+      <p>The effective annual rate is the yearly cost measured on the balance still owed. It is a reference figure and is not the official CAT.</p>
       <h2>Payment schedules</h2>
       {% for quote in quotes %}
       <details>
