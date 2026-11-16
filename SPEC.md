@@ -186,17 +186,36 @@ snippets of these pages were read, not the full legal text, so a fintech lawyer 
 still confirm them.
 
 Sourced:
-- Vehicle considered: SOFOM E.N.R. The registration is made with CONDUSEF in its registry
-  of financial service providers (SIPRES), and the company does not need SHCP
-  authorization to be constituted (CONDUSEF).
-- Before registering, a new SOFOM E.N.R. must obtain from the CNBV a technical opinion
-  (dictamen tecnico) on its AML/PLD program (CNBV FAQ for SOFOM E.N.R.).
-- The CNBV supervises a SOFOM E.N.R. only for AML/PLD, under articles 56 and 95 Bis of the
-  LGOAAC (CONDUSEF and gob.mx publications on SOFOM E.N.R.).
+## Regulatory notes
+Checked on 2026-11-15. The text of LGOAAC articles 56, 87-B and 87-P was read in full
+(Camara de Diputados text, last reform DOF 2025-11-14, read through the mLey.mx mirror).
+Banxico Circular 21/2009 was identified from the DOF and Banxico pages. A fintech lawyer
+should still confirm all of this.
+
+Sourced:
+- LGOAAC art. 87-B, first paragraph: granting credit habitually and professionally does not
+  require authorization from the federal government. Only a corporation (S.A.) with a valid
+  CONDUSEF registration is considered a SOFOM. Registering as a SOFOM E.N.R. is therefore a
+  legal status, not a precondition to lend. TODO-verify with a lawyer which other obligations
+  (for example AML) would apply if the company did not register.
+- LGOAAC art. 87-B item IV and art. 87-P: a SOFOM E.N.R. must obtain from the CNBV, before
+  registering, a favorable technical opinion on its AML/PLD program. The request includes the
+  internal AML policies, the designation of compliance areas and a sworn statement that it has
+  an automated system. If the CNBV does not resolve within its deadlines, the request is deemed
+  approved.
+- LGOAAC art. 56, second paragraph: the CNBV inspects a SOFOM E.N.R. exclusively to verify
+  compliance with article 95 Bis and the rules derived from it.
+- Banxico Circular 21/2009 (DOF 2009-09-04) sets the CAT methodology and applies, among
+  others, to regulated and non-regulated SOFOMs and to companies that habitually grant credit.
+  It was amended by Circulars 27/2009, 9/2015 and 15/2015. Banxico's report to Congress of
+  September 2026 mentions a public consultation to modify it. TODO-verify the final text
+  before calling any figure on screen "CAT".
+- CNBV FAQ for SOFOM E.N.R.: the fee for the technical opinion was $21,292 MXN for fiscal
+  year 2016 (outdated). TODO-verify the current fee in the Ley Federal de Derechos.
 
 Not verified (no official source found; these stay as assumptions, TODO-verify with a
 fintech lawyer):
-- Registration timeline (3 to 4 months) and cost range ($40,000 to $80,000 MXN).
+- Registration timeline (3 to 4 months) and legal cost range ($40,000 to $80,000 MXN).
 - AML/PLD compliance cost ($20,000 to $40,000 MXN per year).
 
 ## Sources
@@ -238,3 +257,8 @@ $200 CAC, $40 operating cost or $120,000 fixed-cost budget; those remain plannin
 | 2026-11-12 | Corrected the six-month affordability example to match the current 4%-per-month-of-term pricing | The previous $467 installment example used an earlier rate; the current $2,500 example is $516.67 per month and requires at least $1,722.24 monthly income | Najhid + Luciano |
 | 2026-11-14 | Changed the late-to-default threshold from 30 to more than 45 calendar days past due (more than three quincenas); the installment and associated loan become defaulted | Defines the delinquency rule for the MVP; the 45-day threshold is our design assumption | Najhid + Luciano |
 | 2026-11-14 | Rebased unit economics to 7% delinquency-balance proxy, $2,500 ticket, 4 loans/year for 6 years, $200 CAC and $40 operating cost; recalculated term margins, LTV and annual break-even | Replaces the prior 5%/3-loan/CAC $180 assumptions. Under the current 4% pricing, the 6-month contribution is about $415 before CAC, lifetime LTV about $9,960, LTV/CAC about 49.8x and first-year cost-recovery volume about 329 loans; the 7% proxy is not a measured default/loss rate | Najhid + Luciano |
+- LGOAAC, official text: https://www.diputados.gob.mx/LeyesBiblio/pdf/LGOAAC.pdf
+- Banxico, Circular 21/2009 (CAT): https://www.banxico.org.mx/marco-normativo/normativa-emitida-por-el-banco-de-mexico/circular-21-2009/costo-anual-total-disposicion.html
+- Banxico report to Congress, 2026-09-14: https://gaceta.diputados.gob.mx/PDF/66/2026/sep/Banxico-20260914.pdf
+
+| 2026-11-15 | Regulatory notes rewritten after reading LGOAAC arts. 56, 87-B and 87-P and identifying the Banxico CAT circular; effective annual rate shown on the quote screen as a reference figure | Closes review item 5 for the sourced claims; timeline and cost figures remain unverified | Najhid + Luciano |
