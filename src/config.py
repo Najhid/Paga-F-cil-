@@ -17,3 +17,13 @@ TERMS_MONTHS = (3, 6, 9, 12)
 # Sample cart for the demo, in MXN. $2,500 is our assumed average bookstore ticket and has
 # not been validated against real bookstore prices yet.
 EXAMPLE_CART_TOTAL = Decimal("2500.00")
+
+# León's declared monthly income in MXN. Invented for the demo (SPEC.md data model).
+DECLARED_MONTHLY_INCOME = Decimal("12000.00")
+
+# Initial credit limit in MXN: the largest cart total we approve (SPEC.md approval rule).
+CREDIT_LIMIT = Decimal("6500.00")
+
+# Largest share of declared monthly income that one monthly installment may take.
+# The credit limit and this share are product-design assumptions, not regulatory limits.
+MAX_INSTALLMENT_SHARE_OF_INCOME = Decimal("0.30")
