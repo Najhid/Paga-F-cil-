@@ -34,7 +34,8 @@ The single flow that must work end to end at Demo Day:
 
 ## Data model (plain words)
 User has Loans; Merchant has Loans; each Loan has Installments.
-- **User:** name, declared monthly income, initial credit limit of $6,500 MXN (invented).
+- **User:** name, declared monthly income (León: $12,000 MXN, invented), initial credit limit of $6,500 MXN (invented).
+| 2026-11-15 | Set León's declared monthly income to $12,000 MXN (seed data) and implemented the approval rule on the quote screen | Required to run the approval rule end to end; the value is invented | Najhid + Luciano |
 - **Merchant:** name, merchant fee rate (4%).
 - **Loan:** user, merchant, price, term in months, merchant fee, funded amount (price minus
   fee), total interest, total to repay, status (approved / active / paid / defaulted).
