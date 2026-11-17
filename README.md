@@ -91,6 +91,11 @@ With the virtual environment active, run:
 python -m pytest
 ```
 
+The test suite also evaluates the financial-model workbook formulas, checks cash
+collections, and confirms that valuation outputs stay blank while required assumptions
+are pending. The workbook formulas are evaluated in memory; open the file in Excel to
+refresh its displayed cached values.
+
 ## Project files
 
 - `SPEC.md`: scope, core flow, data model and unit economics; source of truth

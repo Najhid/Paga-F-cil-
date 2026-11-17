@@ -126,3 +126,9 @@ Template:
 - AI did: Copilot reviewed Affirm and Sezzle SEC filings and Nasdaq closing prices. Their estimated equity market-capitalization/TTM-revenue ratios were 4.63x and 9.41x, respectively. It recorded the calculations and source URLs in SPEC.md and retained the valuation inputs as blank in the workbook.
 - We decided: treat the listed companies as public-market context only. Their scale, geography, product mix and revenue basis differ from PagaFácil, and market capitalization/revenue is not the enterprise-value/revenue basis implied by the workbook formulas. Multiples and rates remain pending explicit team-approved assumptions.
 - Reviewer flags: no separate reviewer run. SEC filing revenue/share counts and Nasdaq closing prices were checked; workbook formulas and valuation outputs were not recalculated in a spreadsheet engine.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: calculate the financial workbook from the project environment and fix any formula errors found.
+- AI did: after both partners approved, Copilot added `formulas[excel]==1.3.4` to requirements.txt and added pytest coverage that evaluates every workbook formula, checks comments, and validates annual cash collections. The evaluator found `#VALUE!` in Valuation!D13:D15 when valuation inputs were blank; Copilot changed the formulas to guard blank inputs before doing arithmetic.
+- We decided: keep unresolved valuation and future-year cash requirements blank. Use the project test suite to evaluate formulas in memory without replacing formulas or writing cached values into the workbook.
+- Reviewer flags: the independent reviewer returned APPROVE with no findings. Validation passed: 3 targeted workbook tests and all 61 project tests; all 234 workbook formulas evaluate without spreadsheet errors and have comments.
