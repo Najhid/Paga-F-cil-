@@ -48,3 +48,9 @@ Template:
 - Goal: apply the small fixes found in the repo review (money formatting, config comments, reviewer path decision) and add PROJECT_METHOD.md.
 - AI did: Claude Sonnet 5.5 (claude.ai chat, not agent mode) reviewed the repo zip: it ran the 15 tests in a clean environment, recomputed prices and installment schedules, and found format_mxn showing $516.5 instead of $516.50, a duplicate SPEC2.md and missing comments in config.py. It gave us the code and comment changes step by step. <If Copilot applied or checked any of them, say exactly which and with what model.>
 - We decided: added PROJECT_METHOD.md unchanged from the course version; fixed format_mxn and added two tests (17 tests pass); commented the constants in config.py; recorded in DECISIONS.md why the reviewer lives in .github/agents/. The minus sign in SPEC.md and the port change wait: the first until Luciano's updated SPEC is merged, the second only if the app fails to start.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: apply and verify the final core-flow changes for checkout, loans, installments and test-account isolation.
+- AI did: Copilot in VS Code reviewed `final_push.zip`, integrated its Flask/SQLite flow, tests and docs, corrected the premature late-payment behavior in `src/loans.py`, and added regression tests. The selected model was not recorded in this session.
+- We decided: both partners approved adding the SQLite users, merchant, loans and installments schema. We kept test credentials out of the repository and did not add dependencies.
+- Reviewer flags: the ZIP allowed marking an installment late before its due date; the implementation now rejects that action and tests the future-due and overdue cases. No separate reviewer agent was run.

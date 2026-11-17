@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}PagaFácil{% endblock %}</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 0; color: #12303a; }
+      main { max-width: 62rem; margin: 0 auto; padding: 1rem; }
+      .simulated { background: #fff3cd; padding: .6rem 1rem; font-size: .9rem; }
+      nav { display: flex; gap: 1rem; align-items: center; padding: .6rem 1rem; background: #0b6e74; color: #fff; }
+      nav a { color: #fff; }
+      nav form { margin-left: auto; }
+      table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+      th, td { border: 1px solid #b7c9cc; padding: .4rem .6rem; text-align: left; }
+      th { background: #e8f2f2; }
+      .error { color: #8a1f1f; font-weight: 600; }
+      button { cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div class="simulated">
+      Simulated environment: all users, merchants and amounts are invented. No real money moves
+      and no bank or credit bureau is used. The merchant payout is a database record only.
+    </div>
+    {% if user %}
+    <nav>
+      <strong>PagaFácil</strong>
+      <a href="{{ url_for('checkout') }}">Checkout</a>
+      <a href="{{ url_for('my_loans') }}">My loans</a>
+      <span>Signed in as {{ user['display_name'] }}</span>
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">Sign out</button>
+      </form>
+    </nav>
+    {% endif %}
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

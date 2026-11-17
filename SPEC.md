@@ -1,6 +1,6 @@
 # SPEC: PagaFácil
 
-Last updated: 2026-11-14 · Owners: Angel Najhid Flores Cartagena + Luciano Yitani Chapa
+Last updated: 2026-11-16 · Owners: Angel Najhid Flores Cartagena + Luciano Yitani Chapa
 
 ## Problem
 University students in Mexico often have no credit card and a thin credit history, so they
@@ -35,7 +35,6 @@ The single flow that must work end to end at Demo Day:
 ## Data model (plain words)
 User has Loans; Merchant has Loans; each Loan has Installments.
 - **User:** name, declared monthly income (León: $12,000 MXN, invented), initial credit limit of $6,500 MXN (invented).
-| 2026-11-15 | Set León's declared monthly income to $12,000 MXN (seed data) and implemented the approval rule on the quote screen | Required to run the approval rule end to end; the value is invented | Najhid + Luciano |
 - **Merchant:** name, merchant fee rate (4%).
 - **Loan:** user, merchant, price, term in months, merchant fee, funded amount (price minus
   fee), total interest, total to repay, status (approved / active / paid / defaulted).
@@ -57,6 +56,25 @@ remains unpaid for more than 45 calendar days past due (more than three quincena
 status changes from late to defaulted and the associated loan becomes defaulted. The
 45-day threshold is our own design assumption. Default is only a status used to measure
 the 5% default assumption; late fees and collections stay out of scope.
+
+## Test environment and security
+
+The app uses invented data created by `python -m src.seed`. The merchant payout is recorded
+in the database but no money moves; credit approval is our own rule, not a bureau query;
+payments are marked manually. The app does not perform KYC or identity verification.
+
+- Sign-in uses usernames and hashed passwords. `SECRET_KEY` is read from the environment,
+  never stored in the repository.
+- Two invented accounts support the demo: León, with no initial loans, and Ana, with
+  seeded loan history for demonstrating default and user isolation. Test passwords belong
+  in the Blackboard submission, never the repository.
+- Every loan page and installment action verifies that the loan belongs to the signed-in
+  user; otherwise it returns 404.
+- Every form carries a CSRF token. Loan amounts and approval are recalculated on the server.
+- The checkout cart can be changed to demonstrate approval and rejection. Inputs must be
+  greater than zero and at most $100,000 MXN.
+- An installment cannot be marked late before its due date. A defaulted installment cannot
+  be changed because collections are out of scope.
 
 ## Dependencies (closed list)
 Anything not on this list needs both partners plus a bitacora entry.
