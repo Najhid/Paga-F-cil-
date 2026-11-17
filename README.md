@@ -11,7 +11,11 @@ Team: Angel Najhid Flores Cartagena · Luciano Yitani Chapa
 > **Prototype only.** All users, merchants and transactions are invented. There are no real
 > payments, no real credit checks and no real personal data.
 
-Hosted test environment: TODO add the URL here once the app is deployed.
+Hosted test environment: [https://najhid21.pythonanywhere.com](https://najhid21.pythonanywhere.com)
+
+The free PythonAnywhere site must be renewed by signing in at least once a month and
+selecting **Run until 1 month from today** on the Web tab. PythonAnywhere currently shows
+the next disable date in the web app settings.
 
 ## What the demo shows
 
