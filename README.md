@@ -69,9 +69,11 @@ Try this flow:
 2. Accept six months. The app records a $2,400 simulated payout after the $100 merchant fee,
    along with six installments and the balance.
 3. Mark an installment paid or, after its due date, late to see the balance or status update.
-4. Enter a cart over $6,500 to show rejection.
-5. Sign in as `ana` to see the seeded defaulted loan.
-6. While signed in as `leon`, try opening Ana's loan. The app returns 404.
+4. Enter a $5,000 cart. The three-month plan is rejected because its $1,866.67 monthly
+   payment exceeds 30% of León's assumed $6,000 income; the longer plans are approved.
+5. Enter a cart over $6,500 to show rejection by the credit limit.
+6. Sign in as `ana` to see the seeded defaulted loan.
+7. While signed in as `leon`, try opening Ana's loan. The app returns 404.
 
 ## Simulated services and security
 
@@ -92,9 +94,24 @@ python -m pytest
 ```
 
 The test suite also evaluates the financial-model workbook formulas, checks cash
-collections, and confirms that valuation outputs stay blank while required assumptions
-are pending. The workbook formulas are evaluated in memory; open the file in Excel to
-refresh its displayed cached values.
+collections, and confirms that valuation outputs stay blank when required assumptions are
+missing. It also checks the workbook's illustrative valuation scenario and one-input-at-a-
+time sensitivities. The valuation assumptions are not market-derived and are not a fair
+market value; negative method outputs indicate that the scenario does not support a
+positive pre-money value. Investor ownership uses the modeled equity portion of the funding
+need, not total debt and equity capital. The workbook reports modeled annual revenue per
+active customer, while disclosing that churn is unmeasured and the exact CAC payback month
+is not modeled. It includes an UP CDMX population ceiling based on the user-provided high
+estimate of 16,500 students, but the source, year and campus scope have not been verified.
+The resulting 100%-adoption revenue and financed-volume figures are hypothetical ceilings,
+not TAM/SAM or demand forecasts. Ten exploratory interviews were reported with finance
+students around October; the year and exact count without credit cards were not recorded,
+so this is not representative demand evidence. The workbook's valuation assumptions are
+illustrative, not market-derived or a fair-market valuation. It includes an unverified
+planning scenario of MXN 60,000 for one-time Year 1 legal counsel and MXN 30,000 per year
+for legal/compliance costs; these are assumptions, not quotes, and must be validated. The
+workbook formulas are evaluated in memory; open the file in Excel to refresh its displayed
+cached values.
 
 ## Project files
 

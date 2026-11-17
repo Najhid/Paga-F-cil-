@@ -34,7 +34,7 @@ The single flow that must work end to end at Demo Day:
 
 ## Data model (plain words)
 User has Loans; Merchant has Loans; each Loan has Installments.
-- **User:** name, declared monthly income (León: $12,000 MXN, invented), initial credit limit of $6,500 MXN (invented).
+- **User:** name, declared monthly income (León: $6,000 MXN, invented), initial credit limit of $6,500 MXN (invented).
 - **Merchant:** name, merchant fee rate (4%).
 - **Loan:** user, merchant, price, term in months, merchant fee, funded amount (price minus
   fee), total interest, total to repay, status (approved / active / paid / defaulted).
@@ -82,6 +82,7 @@ Anything not on this list needs both partners plus a bitacora entry.
 - Python 3 standard library (includes SQLite)
 - Flask
 - pytest
+- `formulas[excel]==1.3.4` for workbook formula tests; its `excel` extra supplies `openpyxl`, which those tests use to inspect and prepare workbook copies. These are development/test dependencies, not Flask runtime features.
 
 ## Out of scope this semester
 - Real payments, real KYC, real credit bureau queries
@@ -92,8 +93,8 @@ Anything not on this list needs both partners plus a bitacora entry.
 
 ## Unit economics and break-even
 These are assumption-based planning estimates, not verified operating results. The
-repository snapshot does not contain an `economics.py` calculator; the calculations below
-are therefore documented estimates rather than values generated automatically.
+calculations below are generated in the `PagaFacil_Financial_Model.xlsx` workbook; they
+remain assumption-based estimates, not verified operating results.
 
 ### Inputs and definitions
 - Average ticket: $2,500 MXN (kept as a planning assumption, not a measured average).
@@ -109,15 +110,18 @@ are therefore documented estimates rather than values generated automatically.
 - CAC: $200 per acquired customer.
 - Conservative customer activity case: 1 loan per year for 4 years, or 4 lifetime loans per
   customer. This is a team-selected planning assumption, not measured repeat behavior.
-- Year 1 fixed costs before the potential official fee: $120,000 in total: $25,000
-  personnel, $45,000 one-time technology setup, $25,000 recurring technology, and $25,000
-  office costs. Personnel, office and recurring technology are modeled at the same amounts
-  in Years 2 to 5. A potential $34,229.19 official technical-opinion fee is added to Year 1
-  for the SOFOM E.N.R. scenario, making modeled Year 1 fixed costs $154,229.19. Legal
-  counsel and ongoing regulatory/compliance costs are not included. These are team
-  estimates except for the cited official fee. Year 1 includes one-time costs and must not
-  be used as a recurring steady-state cost budget. Known recurring costs total $75,000
-  annually, excluding unbudgeted legal and regulatory costs.
+- Year 1 team operating costs before the potential official fee and private legal/compliance
+  scenario are $120,000: $25,000 personnel, $45,000 one-time technology setup, $25,000
+  recurring technology, and $25,000 office costs. Personnel, office and recurring technology
+  are modeled at the same amounts in Years 2 to 5. The workbook scenario adds a potential
+  $34,229.19 official technical-opinion fee in Year 1, $60,000 one-time private legal counsel
+  in Year 1, and $30,000 annual ongoing compliance costs in Years 1 to 5. The legal and
+  compliance amounts are unverified assumptions, not quotes; they are midpoints of the
+  $40,000 to $80,000 and $20,000 to $40,000 ranges below and remain TODO-verify. This makes
+  modeled Year 1 fixed/legal/regulatory costs $244,229.19 and modeled recurring costs
+  $105,000 annually. The official fee's applicability and renewal frequency remain
+  TODO-verify. Year 1 includes one-time costs and must not be used as a recurring
+  steady-state cost budget.
 
 For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of funds `r`:
 - Interest = `P × 4% × n`.
@@ -132,62 +136,74 @@ For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of 
   `$200 / 4 = $50`.
 - For either horizon, contribution after CAC allocation = contribution before CAC minus
   the applicable CAC per loan.
-- Year 1 cost-recovery loans = ceiling(`$154,229.19 / contribution after CAC allocation`).
+- Year 1 cost-recovery loans = ceiling(`$244,229.19 / contribution after CAC allocation`).
   There is no finite break-even if contribution after CAC allocation is zero or negative.
-  Steady-state break-even is not calculated until legal/regulatory and other unbudgeted
-  recurring fixed costs are estimated.
+  Steady-state cost-recovery loans = ceiling(`$105,000 / contribution after steady-state
+  CAC allocation`). The recurring-cost input includes the unverified $30,000 annual
+  compliance assumption and excludes one-time setup, private counsel, and the potential
+  official fee; it is a scenario, not an observed operating budget.
 - Lifetime contribution before CAC = contribution before CAC × 4 loans. LTV/CAC is
   lifetime contribution before CAC divided by $200; this excludes fixed costs and should
   not be interpreted as net profit.
+- Annual ARPU = modeled annual revenue divided by modeled active customers. Under the
+  current forecast this is $700 MXN per active customer per year ($70,000 / 100 in Year 1).
+  It reflects the one-loan-per-customer-per-year planning case, not observed customer
+  revenue.
+- Churn is not measured. The four-year customer life is an assumption and must not be
+  presented as an observed churn rate.
+- The six-month loan's estimated $415 contribution before CAC exceeds the $200 CAC
+  allocation, so one fully completed modeled loan covers CAC under these assumptions.
+  The exact payback month is not modeled because the workbook does not establish cash
+  timing by revenue/cost component or default recoveries.
 
 The $200 CAC allocation estimates first-year economics when each loan belongs to a newly
 acquired customer taking one loan that year. The $50 allocation spreads one customer's CAC
-across four assumed lifetime loans. Year 1 cost recovery uses the $154,229.19 budget,
-including one-time setup and the potential official fee, and is not a recurring operating
-break-even. Steady-state fixed costs are
-unknown because legal/regulatory costs are not budgeted separately. The known recurring
-personnel, office and technology costs total $75,000 annually, excluding those unbudgeted
-costs. Under this case, annual loan volume corresponds to annual customer-loans only if
-each customer takes one loan in that year.
+across four assumed lifetime loans. Year 1 cost recovery uses the $244,229.19 planning
+scenario, including one-time setup, the potential official fee, private counsel, and annual
+compliance. It is not a recurring operating break-even. Steady-state cost recovery uses
+$105,000 of modeled recurring costs, including the unverified annual compliance assumption.
+Under this case, annual loan volume corresponds to annual customer-loans only if each
+customer takes one loan in that year.
 
 At the $2,500 ticket, 7% simplified loss proxy and current 4%-per-month-of-term pricing:
 
 | Term | Total interest | Effective annual rate (approx.) | Merchant fee | Cost of funds | Simplified expected loss | Operating cost | Contribution before CAC | After $200 first-year CAC allocation | First-year cost-recovery loans | After $50 steady-state CAC allocation | Steady-state cost-recovery loans |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | -$55 | none | $95 | pending |
-| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $215 | 718 | $365 | pending |
-| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $485 | 318 | $635 | pending |
-| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $755 | 205 | $905 | pending |
+| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | -$55 | none | $95 | 1,106 |
+| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $215 | 1,136 | $365 | 288 |
+| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $485 | 504 | $635 | 166 |
+| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $755 | 324 | $905 | 117 |
 
 At the 6-month base term, estimated lifetime contribution before CAC is `$415 × 4 =
 $1,660` per customer, and LTV/CAC is `$1,660 / $200 = 8.3x`, before fixed costs. With one
-loan per newly acquired customer in year one, the Year 1 cost-recovery estimate is 718
-six-month loans. Steady-state cost-recovery is pending because legal/regulatory costs are
-not budgeted. The Year 1 $154,229.19 total includes $45,000 of one-time technology setup
-and a potential official fee, so its recovery volume is not a recurring operating target.
+loan per newly acquired customer in year one, the Year 1 cost-recovery estimate is 1,136
+six-month loans. Steady-state cost-recovery is 288 six-month loans under the $105,000
+recurring-cost scenario. The Year 1 $244,229.19 total includes $45,000 of one-time
+technology setup, a potential official fee, and unverified legal/compliance assumptions, so
+its recovery volume is not a recurring operating target.
 
 ### Default/delinquency sensitivity
 The following scenarios use the same simplified full-loss proxy on original ticket,
-allocate $200 CAC per first-year loan, and hold Year 1 fixed costs at $154,229.19,
-including the potential official fee. They are
+allocate $200 CAC per first-year loan, and hold Year 1 fixed costs at $244,229.19,
+including the potential official fee and unverified legal/compliance assumptions. They are
 scenarios, not observed default rates. The word "none" means no finite break-even under
 the assumptions.
 
 | Term | 5% proxy | 7% proxy | 10% proxy | 13% proxy |
 |---|---:|---:|---:|---:|
 | 3 months | none | none | none | none |
-| 6 months | 582 loans | 718 loans | 1,102 loans | 2,373 loans |
-| 9 months | 289 loans | 318 loans | 377 loans | 461 loans |
-| 12 months | 192 loans | 205 loans | 227 loans | 256 loans |
+| 6 months | 922 loans | 1,136 loans | 1,745 loans | 3,758 loans |
+| 9 months | 457 loans | 504 loans | 596 loans | 730 loans |
+| 12 months | 304 loans | 324 loans | 360 loans | 404 loans |
 
 ### Ticket sensitivity at 6 months and 7% proxy
 The $1,500 and $4,000 tickets are illustrative scenarios, not measured low/high averages.
 
 | Ticket | Contribution before CAC | After $200 first-year CAC allocation | First-year break-even loans |
 |---:|---:|---:|---:|
-| $1,500 | $233 | $33 | 4,674 |
-| $2,500 | $415 | $215 | 718 |
-| $4,000 | $688 | $488 | 317 |
+| $1,500 | $233 | $33 | 7,401 |
+| $2,500 | $415 | $215 | 1,136 |
+| $4,000 | $688 | $488 | 501 |
 
 - Effective annual rate: the annual rate at which the present value of equal monthly
   installments equals the price financed (a monthly IRR compounded to one year). Banxico
@@ -203,6 +219,8 @@ specific source and matching definition are documented):
 | Input | Current value | Status / source fit |
 |---|---:|---|
 | Average ticket | $2,500 | Assumption. Expansion reports Kueski/Amazon purchases from $299 to $5,000; this supports a possible market range, not a $2,500 average. |
+| UP CDMX student population | 15,469 to 16,500 reported; 16,500 used for the high-end ceiling | User-researched estimate; source, year, campus scope and student population definition were not provided. TODO-verify before presenting as official enrollment. |
+| Student interviews | 10 finance students; around October, year not recorded | User-reported exploratory interviews. The majority reportedly lacked a credit card, but the exact count, question wording, sampling method, purchasing behavior and willingness to use PagaFácil were not recorded. Not representative and not evidence of market demand. |
 | Delinquency/loss proxy | 7% of balances | User-provided modeling assumption. The cited sources do not establish this as PagaFácil's default or net loss rate; proxy treatment is deliberately simplified and must be replaced with comparable portfolio data and recovery rates. |
 | Loans per customer | 4 lifetime, modeled as 1 per year for 4 years | Team-selected conservative assumption; actual repeat frequency is unknown. |
 | Customer lifetime | 4 years in this scenario | Implied by the 1-loan-per-year, 4-year planning case; actual retention is unknown. |
@@ -211,8 +229,42 @@ specific source and matching definition are documented):
 | Loan origination timing | 50% in January and 50% in August | Team-approved planning scenario for the cash model. With six-month loans and installments starting one month after origination, Year 1 collects 11/12 of its originations' contractual repayments; later years collect 11/12 of current-year and 1/12 of prior-year originations. These are scheduled amounts before missed-payment effects, not dated payment data. |
 | Funding mix | 60% debt; 40% equity | Team-approved illustrative split of required capital. Debt interest, term, fees, repayment schedule, and financing availability are not modeled, so this is not a validated funding plan. |
 | Operating and credit-check cost | $40 per loan | Assumption; obtain actual provider quotes and servicing cost breakdown. |
-| Fixed costs | $154,229.19 Year 1: $120,000 team estimates plus $34,229.19 potential official fee | The 2026 fee schedule lists $34,229.19 for LFD Article 29 XXVI; CNBV's FAQ associates that fraction with the AML technical-opinion procedure but shows an outdated 2016 amount. Verify applicability and renewal frequency. Legal counsel and ongoing compliance costs remain unbudgeted. |
+| Fixed costs | $244,229.19 modeled Year 1 scenario: $120,000 team estimates, $34,229.19 potential official fee, $60,000 one-time legal assumption, and $30,000 annual compliance assumption | The fee schedule lists $34,229.19 for LFD Article 29 XXVI; CNBV's FAQ associates that fraction with the AML technical-opinion procedure but shows an outdated 2016 amount. Applicability and renewal frequency are TODO-verify. Legal and compliance amounts are unverified midpoints of the $40,000-$80,000 and $20,000-$40,000 ranges, not quotes. |
 | Cost of funds | 10% annual | Assumption; prior reference was 28-day TIIE at 6.5147% on 2026-11-06 (Banxico, DOF), not a lender quote. |
+
+### Initial campus population ceiling and interview evidence
+
+The initial geography is the Universidad Panamericana campus in Ciudad de México. The
+official [UP campus page](https://www.up.edu.mx/campus-up/cdmx/) confirms the campus
+location, but does not publish an enrollment count. The user supplied an approximate
+population range of 15,469 to 16,500 students and selected the high end, 16,500, for an
+upper-bound scenario. The source, year, campus scope and population definition have not
+been provided; this figure is not independently verified and is TODO-verify. SEP publishes
+education statistics by state, but those aggregates do not verify UP CDMX enrollment or
+the number of eligible borrowers.
+
+The workbook's 100% adoption ceiling assumes all 16,500 students are in scope, each takes
+one $2,500 six-month loan per year, and current base-term pricing applies:
+
+- Hypothetical annual financed volume = `16,500 × $2,500 × 1 loan = $41,250,000 MXN`.
+- Gross revenue per six-month loan = `$2,500 × 4% × 6 months + $2,500 × 4% merchant fee = $700 MXN`.
+- Hypothetical gross annual revenue ceiling = `16,500 × $700 = $11,550,000 MXN`.
+
+These are mathematical ceilings under 100% adoption, not TAM, SAM, an eligible borrower
+count, a demand forecast, or a market-share claim. They do not account for student
+eligibility, income, credit approval, purchase frequency, interest in borrowing, or
+merchant participation.
+
+The five-year forecast's active customers of 100, 125, 150, 175 and 100 correspond to
+approximately 0.61%, 0.76%, 0.91%, 1.06% and 0.61% of the 16,500 upper-bound population,
+respectively. These percentages compare a planning forecast with the unverified
+population estimate; they are not observed penetration or market share.
+
+The user also reported 10 exploratory interviews with finance students around October; the
+year was not recorded. The majority reportedly did not have a credit card. The exact
+count, interview questions, sample-selection method, purchase behavior and willingness to
+use PagaFácil were not captured. This limited convenience sample cannot establish demand,
+representativeness or product-market fit.
 
 ## Regulatory notes
 Checked on 2026-11-11 against the public pages listed under Sources. Only the search
@@ -312,10 +364,17 @@ These are equity market capitalization-to-revenue observations, not enterprise
 value-to-revenue multiples. The companies are established public U.S. lenders with
 different scale, geography, customer base, product mix, reported revenue definitions and
 operating history. PagaFácil is a Mexican student-lending prototype without validated
-originations or revenue. The workbook's revenue-multiple and terminal-value inputs
-therefore remain blank; these observations must not be copied into them. Discount rates,
-the VC return hurdle and terminal assumptions also require explicit team agreement and
-are not supplied by these comparables.
+originations or revenue. The user requested an illustrative academic valuation scenario.
+The workbook uses 1.0x revenue and terminal multiples, a 35% annual discount rate and a
+50% VC target annual return, with one-input-at-a-time sensitivity ranges. These are
+scenario inputs selected for illustration, not market-derived assumptions, direct
+comparables or a fair-market valuation; the public-company observations are not copied
+into them. Under the base case, the revenue-multiple method gives about $15,611 MXN
+pre-money, while the VC and simplified EBITDA DCF methods give negative outputs. Those
+negative results mean the methods do not support a positive pre-money value under these
+inputs, not that PagaFácil has negative fair value. Investor ownership is calculated from
+the modeled 40% equity share of required capital, not the total debt-plus-equity funding
+need. The model's DCF remains a simplified EBITDA proxy, not a full DCF.
 
 Primary sources:
 - Affirm FY2026 Form 10-K:
@@ -351,3 +410,6 @@ Primary sources:
 
 | 2026-11-15 | Regulatory notes rewritten after reading LGOAAC arts. 56, 87-B and 87-P and identifying the Banxico CAT circular; effective annual rate shown on the quote screen as a reference figure | Closes review item 5 for the sourced claims; timeline and cost figures remain unverified | Najhid + Luciano |
 | 2026-11-16 | Replaced the 24-loan lifetime case with a conservative 4-loan lifetime case, modeled as 1 loan/year for 4 years; recalculated CAC allocation, LTV/CAC and break-even sensitivities | The earlier repeat-use assumption was unsupported and overstated 6-month LTV/CAC (49.8x); the selected case gives $1,660 lifetime contribution before CAC and 8.3x LTV/CAC | Najhid + Luciano |
+| 2026-11-16 | Changed León's invented declared monthly income from $12,000 to $6,000 MXN | Makes the 30% affordability rule demonstrable in the checkout while preserving the $6,500 credit limit; product-design assumption, not a regulatory threshold | Najhid + Luciano |
+| 2026-11-16 | Added a workbook planning scenario of $60,000 one-time private legal counsel in Year 1 and $30,000 annual ongoing compliance in Years 1 to 5; recalculated fixed costs and break-even sensitivities | Uses midpoints of unverified ranges already disclosed in the SPEC; these amounts are assumptions, not quotes, and remain TODO-verify. The scenario raises Year 1 modeled costs to $244,229.19 and recurring costs to $105,000 | Najhid + Luciano |
+| 2026-11-16 | Added a 16,500-student upper-bound campus scenario, interview limitations, and an illustrative valuation with sensitivities; corrected ownership calculations to use required equity funding | The enrollment estimate and valuation inputs are explicitly unverified or illustrative, not official enrollment, demand, market multiples or fair value. Sensitivity tests passed; the market ceiling assumes 100% adoption and is not TAM/SAM | Najhid + Luciano |

@@ -3,8 +3,9 @@ from decimal import Decimal
 import pytest
 
 from src.approval import decide_loan
+from src.config import DECLARED_MONTHLY_INCOME
 
-INCOME = Decimal("12000.00")
+INCOME = DECLARED_MONTHLY_INCOME
 LIMIT = Decimal("6500.00")
 SHARE = Decimal("0.30")
 
@@ -33,11 +34,11 @@ def test_amount_above_the_credit_limit_is_rejected() -> None:
 
 
 def test_payment_exactly_at_the_income_share_is_approved() -> None:
-    assert decide("5000.00", "3600.00").approved
+    assert decide("5000.00", "1800.00").approved
 
 
 def test_payment_above_the_income_share_is_rejected() -> None:
-    decision = decide("5000.00", "3600.01")
+    decision = decide("5000.00", "1800.01")
 
     assert not decision.approved
     assert "30% of declared income" in decision.reasons[0]

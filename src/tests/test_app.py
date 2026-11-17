@@ -55,6 +55,18 @@ def test_checkout_rejects_a_cart_above_the_credit_limit(client, login) -> None:
     assert "above the credit limit" in page
 
 
+def test_checkout_rejects_short_term_payment_above_income_limit(client, login) -> None:
+    login("leon")
+
+    page = client.get("/?cart=5000").get_data(as_text=True)
+
+    assert "Declared monthly income: $6,000 MXN" in page
+    assert "Maximum monthly payment: $1,800 MXN" in page
+    assert "$1,866.67 MXN" in page
+    assert page.count("Approved") == 3
+    assert "Rejected: Monthly payment is above 30% of declared income" in page
+
+
 def test_invalid_cart_total_shows_an_error_and_example_cart(client, login) -> None:
     login("leon")
 
