@@ -60,3 +60,15 @@ Template:
 - AI did: Copilot guided the manual Flask deployment, configured the Python 3.11 virtual environment and WSGI import, and updated the README with the URL. No credentials or secret keys were added to the repository.
 - We decided: use `https://najhid21.pythonanywhere.com` for the demo. The site loaded, León signed in, a six-month loan was recorded, and marking one installment paid reduced the displayed balance. PythonAnywhere's free site needs a monthly renewal; its dashboard showed a disable date of 2026-12-17.
 - Reviewer flags: none. The deployed loan detail displayed 2026-11-17 as its creation date while the local date was 2026-11-16, so the server timezone/date difference remains to be checked.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: choose a conservative repeat-loan assumption for the financial model and update the unit-economics calculations.
+- AI did: Copilot recalculated six-month lifetime contribution, LTV/CAC, CAC allocation and break-even sensitivity using the selected four-loan lifetime case.
+- We decided: model 1 loan per customer per year for 4 years, or 4 lifetime loans, replacing the unsupported 24-loan case. At the six-month base term, estimated lifetime contribution before CAC is $1,660 and LTV/CAC is 8.3x; these remain assumption-based estimates.
+- Reviewer flags: none. Five-year customer-acquisition, operating-cost, financing and valuation inputs are still needed before the complete Excel model can be populated.
+
+## 2026-11-16 · Najhid
+- Goal: create a financial-model workbook without presenting missing forecasts or valuation inputs as facts.
+- AI did: Copilot generated `PagaFacil_Financial_Model.xlsx` with assumptions, five-year P&L, cash flow, unit economics and three valuation methods. It left unapproved forecasts and valuation inputs blank, added explanatory comments to formulas, and corrected the cash-flow proxy so borrower collections are not double-counted as P&L revenue. The selected model was not recorded.
+- We decided: keep unresolved customer, cost, collection-timing and valuation assumptions blank until the team agrees on documented inputs. No project dependency was added.
+- Reviewer flags: none. The workbook structure, 213 formulas and comments on every formula were checked with openpyxl; financial outputs still require the team's missing assumptions and spreadsheet recalculation.
