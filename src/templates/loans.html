@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}My loans · PagaFácil{% endblock %}
+{% block content %}
+<h1>My loans</h1>
+{% if loans %}
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Loan</th><th scope="col">Created</th><th scope="col">Price</th>
+      <th scope="col">Term</th><th scope="col">Total to repay</th><th scope="col">Balance</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for loan in loans %}
+    <tr>
+      <th scope="row"><a href="{{ url_for('loan_detail', loan_id=loan.id) }}">#{{ loan.id }}</a></th>
+      <td>{{ loan.created_on }}</td>
+      <td>{{ loan.price|mxn }}</td>
+      <td>{{ loan.term_months }} months</td>
+      <td>{{ loan.total_to_repay|mxn }}</td>
+      <td>{{ loan.balance|mxn }}</td>
+      <td>{{ loan.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>You have no loans yet. Go to Checkout to take one.</p>
+{% endif %}
+{% endblock %}

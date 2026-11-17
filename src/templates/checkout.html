@@ -1,67 +1,72 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PagaFácil checkout quote</title>
-  </head>
-  <body>
-    <main>
-      <h1>Checkout quote</h1>
-      <p>Example bookstore cart: {{ cart_total|mxn }}</p>
-      <p>Declared monthly income: {{ declared_income|mxn }}. Credit limit: {{ credit_limit|mxn }}. Maximum monthly payment: {{ max_monthly_payment|mxn }}.</p>
-      <table>
-        <caption>Choose a payment term to compare the full cost</caption>
-        <thead>
-          <tr>
-            <th scope="col">Term</th>
-            <th scope="col">Interest</th>
-            <th scope="col">Total to repay</th>
-            <th scope="col">Regular monthly payment</th>
-            <th scope="col">Effective annual rate (reference)</th>
-            <th scope="col">Decision</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for quote in quotes %}
-          <tr>
-            <th scope="row">{{ quote.term_months }} months</th>
-            <td>{{ quote.interest|mxn }}</td>
-            <td>{{ quote.total_repayment|mxn }}</td>
-            <td>{{ quote.monthly_payment|mxn }}</td>
-            <td>{{ quote.effective_annual_rate|pct }}</td>
-            {% set decision = decisions[quote.term_months] %}
-            <td>{% if decision.approved %}Approved{% else %}Rejected: {{ decision.reasons|join(" ") }}{% endif %}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <p>The final installment is adjusted for rounding so all installments add up to the total.</p>
-      <p>The effective annual rate is the yearly cost measured on the balance still owed. It is a reference figure and is not the official CAT.</p>
-      <h2>Payment schedules</h2>
-      {% for quote in quotes %}
-      <details>
-        <summary>{{ quote.term_months }}-month schedule</summary>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Installment</th>
-              <th scope="col">Due date</th>
-              <th scope="col">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for installment in quote.installments %}
-            <tr>
-              <th scope="row">{{ installment.number }}</th>
-              <td>{{ installment.due_date.isoformat() }}</td>
-              <td>{{ installment.amount|mxn }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </details>
+{% extends "base.html" %}
+{% block title %}Checkout quote · PagaFácil{% endblock %}
+{% block content %}
+<h1>Checkout quote</h1>
+<form method="get" action="{{ url_for('checkout') }}">
+  <label>Bookstore cart total (MXN)
+    <input name="cart" inputmode="decimal" value="{{ cart_total }}">
+  </label>
+  <button type="submit">Update quote</button>
+</form>
+{% if cart_error %}<p class="error">{{ cart_error }}</p>{% endif %}
+<p>Bookstore cart: {{ cart_total|mxn }}</p>
+<p>Declared monthly income: {{ declared_income|mxn }}. Credit limit: {{ credit_limit|mxn }}. Maximum monthly payment: {{ max_monthly_payment|mxn }}.</p>
+<table>
+  <caption>Choose a payment term to compare the full cost</caption>
+  <thead>
+    <tr>
+      <th scope="col">Term</th>
+      <th scope="col">Interest</th>
+      <th scope="col">Total to repay</th>
+      <th scope="col">Regular monthly payment</th>
+      <th scope="col">Effective annual rate (reference)</th>
+      <th scope="col">Decision</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for quote, decision in offers %}
+    <tr>
+      <th scope="row">{{ quote.term_months }} months</th>
+      <td>{{ quote.interest|mxn }}</td>
+      <td>{{ quote.total_repayment|mxn }}</td>
+      <td>{{ quote.monthly_payment|mxn }}</td>
+      <td>{{ quote.effective_annual_rate|pct }}</td>
+      <td>{% if decision.approved %}Approved{% else %}Rejected: {{ decision.reasons|join(" ") }}{% endif %}</td>
+      <td>
+        {% if decision.approved %}
+        <form method="post" action="{{ url_for('accept_loan') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="cart" value="{{ cart_total }}">
+          <input type="hidden" name="term" value="{{ quote.term_months }}">
+          <button type="submit">Accept {{ quote.term_months }} months</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p>The final installment is adjusted for rounding so all installments add up to the total.</p>
+<p>The effective annual rate is the yearly cost measured on the balance still owed. It is a reference figure and is not the official CAT.</p>
+<h2>Payment schedules</h2>
+{% for quote, decision in offers %}
+<details>
+  <summary>{{ quote.term_months }}-month schedule</summary>
+  <table>
+    <thead>
+      <tr><th scope="col">Installment</th><th scope="col">Due date</th><th scope="col">Amount</th></tr>
+    </thead>
+    <tbody>
+      {% for installment in quote.installments %}
+      <tr>
+        <th scope="row">{{ installment.number }}</th>
+        <td>{{ installment.due_date.isoformat() }}</td>
+        <td>{{ installment.amount|mxn }}</td>
+      </tr>
       {% endfor %}
-    </main>
-  </body>
-</html>
+    </tbody>
+  </table>
+</details>
+{% endfor %}
+{% endblock %}
