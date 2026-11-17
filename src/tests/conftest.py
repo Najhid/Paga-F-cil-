@@ -4,6 +4,7 @@ import pytest
 from werkzeug.security import generate_password_hash
 
 import src.app as app_module
+from src.config import DECLARED_MONTHLY_INCOME
 from src.db import connect, init_db
 
 TODAY = date(2026, 11, 16)
@@ -20,7 +21,7 @@ def client(tmp_path, monkeypatch):
         "INSERT INTO merchants (name, fee_rate) VALUES ('Campus Bookstore', '0.04')"
     )
     for username, name, income in (
-        ("leon", "León Lara", "12000.00"),
+        ("leon", "León Lara", str(DECLARED_MONTHLY_INCOME)),
         ("ana", "Ana Mora", "8000.00"),
     ):
         connection.execute(
