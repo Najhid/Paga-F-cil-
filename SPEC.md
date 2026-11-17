@@ -219,7 +219,7 @@ specific source and matching definition are documented):
 | Input | Current value | Status / source fit |
 |---|---:|---|
 | Average ticket | $2,500 | Assumption. Expansion reports Kueski/Amazon purchases from $299 to $5,000; this supports a possible market range, not a $2,500 average. |
-| UP CDMX student population | 15,469 to 16,500 reported; 16,500 used for the high-end ceiling | User-researched estimate; source, year, campus scope and student population definition were not provided. TODO-verify before presenting as official enrollment. |
+| UP CDMX student population | User-reported range of 15,469 to 16,500; 16,500 retained only as an unverified scenario input | Data México reports 14,693 enrollments for Universidad Panamericana overall in 2022, but not a current UP CDMX campus count. This does not verify the user-reported range or its scope. Do not present 16,500 as campus enrollment, eligible borrowers or a market ceiling. |
 | Student interviews | 10 finance students; around October, year not recorded | User-reported exploratory interviews. The majority reportedly lacked a credit card, but the exact count, question wording, sampling method, purchasing behavior and willingness to use PagaFácil were not recorded. Not representative and not evidence of market demand. |
 | Delinquency/loss proxy | 7% of balances | User-provided modeling assumption. The cited sources do not establish this as PagaFácil's default or net loss rate; proxy treatment is deliberately simplified and must be replaced with comparable portfolio data and recovery rates. |
 | Loans per customer | 4 lifetime, modeled as 1 per year for 4 years | Team-selected conservative assumption; actual repeat frequency is unknown. |
@@ -232,33 +232,37 @@ specific source and matching definition are documented):
 | Fixed costs | $244,229.19 modeled Year 1 scenario: $120,000 team estimates, $34,229.19 potential official fee, $60,000 one-time legal assumption, and $30,000 annual compliance assumption | The fee schedule lists $34,229.19 for LFD Article 29 XXVI; CNBV's FAQ associates that fraction with the AML technical-opinion procedure but shows an outdated 2016 amount. Applicability and renewal frequency are TODO-verify. Legal and compliance amounts are unverified midpoints of the $40,000-$80,000 and $20,000-$40,000 ranges, not quotes. |
 | Cost of funds | 10% annual | Assumption; prior reference was 28-day TIIE at 6.5147% on 2026-11-06 (Banxico, DOF), not a lender quote. |
 
-### Initial campus population ceiling and interview evidence
+### Reported population and interview evidence
 
 The initial geography is the Universidad Panamericana campus in Ciudad de México. The
 official [UP campus page](https://www.up.edu.mx/campus-up/cdmx/) confirms the campus
 location, but does not publish an enrollment count. The user supplied an approximate
-population range of 15,469 to 16,500 students and selected the high end, 16,500, for an
-upper-bound scenario. The source, year, campus scope and population definition have not
-been provided; this figure is not independently verified and is TODO-verify. SEP publishes
-education statistics by state, but those aggregates do not verify UP CDMX enrollment or
-the number of eligible borrowers.
+population range of 15,469 to 16,500 students; its source, year, campus scope and population
+definition were not provided. The official [Data México profile for Universidad
+Panamericana](https://www.economia.gob.mx/datamexico/en/profile/institution/universidad-panamericana)
+reports 14,693 enrollments for the university overall in 2022. It does not report a
+current UP CDMX campus count and does not verify the larger user-reported range. The
+different year, scope and population definition have not been reconciled. The 16,500
+workbook input is retained only to preserve a user-selected scenario, not as verified
+enrollment or a market ceiling. SEP publishes education statistics by state, but those
+aggregates do not verify UP CDMX enrollment or the number of eligible borrowers.
 
-The workbook's 100% adoption ceiling assumes all 16,500 students are in scope, each takes
-one $2,500 six-month loan per year, and current base-term pricing applies:
+For continuity, the workbook's 100% adoption scenario uses the unverified 16,500 input,
+one $2,500 six-month loan per student per year, and current base-term pricing:
 
 - Hypothetical annual financed volume = `16,500 × $2,500 × 1 loan = $41,250,000 MXN`.
 - Gross revenue per six-month loan = `$2,500 × 4% × 6 months + $2,500 × 4% merchant fee = $700 MXN`.
-- Hypothetical gross annual revenue ceiling = `16,500 × $700 = $11,550,000 MXN`.
+- Hypothetical gross annual revenue = `16,500 × $700 = $11,550,000 MXN`.
 
-These are mathematical ceilings under 100% adoption, not TAM, SAM, an eligible borrower
-count, a demand forecast, or a market-share claim. They do not account for student
-eligibility, income, credit approval, purchase frequency, interest in borrowing, or
-merchant participation.
+These are conditional scenario outputs at 100% adoption, not TAM, SAM, verified population
+ceilings, eligible borrower counts, demand forecasts, or market-share claims. They do not
+account for student eligibility, income, credit approval, purchase frequency, interest in
+borrowing, or merchant participation.
 
 The five-year forecast's active customers of 100, 125, 150, 175 and 100 correspond to
-approximately 0.61%, 0.76%, 0.91%, 1.06% and 0.61% of the 16,500 upper-bound population,
-respectively. These percentages compare a planning forecast with the unverified
-population estimate; they are not observed penetration or market share.
+approximately 0.61%, 0.76%, 0.91%, 1.06% and 0.61% of the 16,500 scenario input,
+respectively. These ratios compare a planning forecast with an unverified user-reported
+input; they are not observed penetration or market share.
 
 The user also reported 10 exploratory interviews with finance students around October; the
 year was not recorded. The majority reportedly did not have a credit card. The exact
@@ -309,6 +313,8 @@ fintech lawyer):
 
 ## Sources
 Existing regulatory and market references:
+- Secretaría de Economía, Data México, Universidad Panamericana profile (14,693 university-wide enrollments in 2022; not a current campus-specific count):
+  https://www.economia.gob.mx/datamexico/en/profile/institution/universidad-panamericana
 - CONDUSEF, SIPRES: https://webapps.condusef.gob.mx/SIPRES/jsp/index.jsp
 - CONDUSEF, Sofomes booklet: https://www.condusef.gob.mx/documentos/111134_CUADERNOSYVIDEOS-SOFOMES.pdf
 - gob.mx, Sofomes No Reguladas: https://www.gob.mx/cms/uploads/attachment/file/109296/Sofomes_No_Reguladas.pdf

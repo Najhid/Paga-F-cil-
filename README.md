@@ -101,10 +101,12 @@ market value; negative method outputs indicate that the scenario does not suppor
 positive pre-money value. Investor ownership uses the modeled equity portion of the funding
 need, not total debt and equity capital. The workbook reports modeled annual revenue per
 active customer, while disclosing that churn is unmeasured and the exact CAC payback month
-is not modeled. It includes an UP CDMX population ceiling based on the user-provided high
-estimate of 16,500 students, but the source, year and campus scope have not been verified.
-The resulting 100%-adoption revenue and financed-volume figures are hypothetical ceilings,
-not TAM/SAM or demand forecasts. Ten exploratory interviews were reported with finance
+is not modeled. The workbook retains the user-reported 16,500 student count only as an
+unverified population scenario. Data México reports 14,693 enrollments for Universidad
+Panamericana overall in 2022, not a current UP CDMX campus count; the different year and
+scope do not validate the user-reported range. The resulting 100%-adoption revenue and
+financed-volume figures are conditional scenario outputs, not TAM/SAM, eligible-borrower
+counts or demand forecasts. Ten exploratory interviews were reported with finance
 students around October; the year and exact count without credit cards were not recorded,
 so this is not representative demand evidence. The workbook's valuation assumptions are
 illustrative, not market-derived or a fair-market valuation. It includes an unverified
