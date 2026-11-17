@@ -120,3 +120,9 @@ Template:
 - AI did: Copilot added January/August origination-share inputs and formulas to the workbook. The formulas include all six installments for January originations, five for August originations in the same year, and the final August installment in the following year. It also set the required-capital split to 60% debt and 40% equity. SPEC.md and DECISIONS.md record both scenarios.
 - We decided: use a 50% January and 50% August split for the six-month base case, and a 60% debt / 40% equity split only as an illustrative allocation. Collections are scheduled gross amounts before missed-payment effects; intra-year liquidity and actual payment dates remain unmodeled. Debt interest, term, fees, repayment schedule, and availability are also unknown and unmodeled.
 - Reviewer flags: no separate reviewer run. Workbook formulas, comments and expected annual collection values were checked; the funding percentages total 100%. Recalculation in Excel or another spreadsheet engine remains to be confirmed.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: find source-backed public comparables for the workbook's valuation assumptions.
+- AI did: Copilot reviewed Affirm and Sezzle SEC filings and Nasdaq closing prices. Their estimated equity market-capitalization/TTM-revenue ratios were 4.63x and 9.41x, respectively. It recorded the calculations and source URLs in SPEC.md and retained the valuation inputs as blank in the workbook.
+- We decided: treat the listed companies as public-market context only. Their scale, geography, product mix and revenue basis differ from PagaFácil, and market capitalization/revenue is not the enterprise-value/revenue basis implied by the workbook formulas. Multiples and rates remain pending explicit team-approved assumptions.
+- Reviewer flags: no separate reviewer run. SEC filing revenue/share counts and Nasdaq closing prices were checked; workbook formulas and valuation outputs were not recalculated in a spreadsheet engine.

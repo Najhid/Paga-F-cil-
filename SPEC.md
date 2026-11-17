@@ -291,6 +291,45 @@ scenario, $200 CAC, $40 operating cost or team fixed-cost estimates; those remai
 inputs. The official fee amount does not establish private legal or ongoing compliance
 costs.
 
+### Public BNPL valuation references screened on 2026-11-16
+
+Two listed lenders were screened as public-market context, not selected as valuation
+comparables:
+
+| Company | Estimated equity market capitalization | TTM reported revenue | Equity market capitalization / TTM revenue |
+|---|---:|---:|---:|
+| Affirm | USD 21,259.6 million | USD 4,590.0 million | 4.63x |
+| Sezzle | USD 5,470.2 million | USD 581.6 million | 9.41x |
+
+Market capitalization is estimated as the November 16, 2026 Nasdaq closing price times
+the latest common-share count reported in the filings. TTM revenue is calculated from
+reported periods: Affirm, USD 4,261.082 million FY2026 revenue plus USD 1,262.216 million
+for the September 2026 quarter minus USD 933.337 million for the September 2025 quarter;
+Sezzle, USD 450.279 million FY2025 revenue plus USD 451.725 million for the nine months
+ended September 2026 minus USD 320.410 million for the comparable 2025 period.
+
+These are equity market capitalization-to-revenue observations, not enterprise
+value-to-revenue multiples. The companies are established public U.S. lenders with
+different scale, geography, customer base, product mix, reported revenue definitions and
+operating history. PagaFácil is a Mexican student-lending prototype without validated
+originations or revenue. The workbook's revenue-multiple and terminal-value inputs
+therefore remain blank; these observations must not be copied into them. Discount rates,
+the VC return hurdle and terminal assumptions also require explicit team agreement and
+are not supplied by these comparables.
+
+Primary sources:
+- Affirm FY2026 Form 10-K:
+  https://www.sec.gov/Archives/edgar/data/1820953/000162828026059279/afrm-20260630.htm
+- Affirm Q1 FY2027 Form 10-Q:
+  https://www.sec.gov/Archives/edgar/data/1820953/000162828026071153/afrm-20260930.htm
+- Sezzle FY2025 Form 10-K:
+  https://www.sec.gov/Archives/edgar/data/1662991/000166299126000016/szl-20251231.htm
+- Sezzle Q3 2026 Form 10-Q:
+  https://www.sec.gov/Archives/edgar/data/1662991/000166299126000171/szl-20260930.htm
+- Nasdaq historical closing prices on 2026-11-16:
+  https://api.nasdaq.com/api/quote/AFRM/historical?assetclass=stocks&fromdate=2026-11-16&todate=2026-11-17&limit=2
+  https://api.nasdaq.com/api/quote/SEZL/historical?assetclass=stocks&fromdate=2026-11-16&todate=2026-11-17&limit=2
+
 ## Changelog
 | Date | Change | Why | Approved by |
 |---|---|---|---|
@@ -305,6 +344,7 @@ costs.
 | 2026-11-16 | Added a potential $34,229.19 one-time Year 1 technical-opinion fee from the official 2026 LFD amount update; recalculated Year 1 cost recovery using total fixed costs of $154,229.19 | CNBV FAQ associates LFD article 29, fraction XXVI with the AML technical-opinion process but displays an outdated 2016 amount. Applicability and renewal frequency are TODO-verify; private legal and ongoing compliance costs remain unbudgeted | Najhid + Luciano |
 | 2026-11-16 | Added the approved 50% January and 50% August origination scenario to the six-month cash model | Calculates annual scheduled collections while carrying the final August installment into the following year; missed-payment effects and intra-year liquidity remain simplified | Najhid + Luciano |
 | 2026-11-16 | Set the illustrative funding split to 60% debt and 40% equity | Allocates the required raise by source only; debt service and financing terms remain unmodeled, so the split is not a financing plan | Najhid + Luciano |
+| 2026-11-16 | Screened Affirm and Sezzle public-market data but left workbook valuation multiples and rates blank | Their market-capitalization/revenue ratios are not direct comparables for the Mexican student prototype and do not match the workbook's enterprise-value-like formula basis | Najhid + Luciano |
 - LGOAAC, official text: https://www.diputados.gob.mx/LeyesBiblio/pdf/LGOAAC.pdf
 - Banxico, Circular 21/2009 (CAT): https://www.banxico.org.mx/marco-normativo/normativa-emitida-por-el-banco-de-mexico/circular-21-2009/costo-anual-total-disposicion.html
 - Banxico report to Congress, 2026-09-14: https://gaceta.diputados.gob.mx/PDF/66/2026/sep/Banxico-20260914.pdf
