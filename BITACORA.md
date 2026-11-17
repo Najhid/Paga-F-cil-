@@ -72,3 +72,51 @@ Template:
 - AI did: Copilot generated `PagaFacil_Financial_Model.xlsx` with assumptions, five-year P&L, cash flow, unit economics and three valuation methods. It left unapproved forecasts and valuation inputs blank, added explanatory comments to formulas, and corrected the cash-flow proxy so borrower collections are not double-counted as P&L revenue. The selected model was not recorded.
 - We decided: keep unresolved customer, cost, collection-timing and valuation assumptions blank until the team agrees on documented inputs. No project dependency was added.
 - Reviewer flags: none. The workbook structure, 213 formulas and comments on every formula were checked with openpyxl; financial outputs still require the team's missing assumptions and spreadsheet recalculation.
+
+## 2026-11-16 · Najhid
+- Goal: add an initial customer-acquisition target to the financial model.
+- AI did: Copilot entered a preliminary target of about 100 new students in Year 1 in the workbook and documented it in SPEC.md and DECISIONS.md. At the existing $200 CAC assumption, the workbook calculates $20,000 of acquisition expense.
+- We decided: treat 100 as a team planning hypothesis, not a market forecast; leave Years 2 to 5 blank until an agreed growth basis exists.
+- Reviewer flags: none. Workbook formulas and comments were revalidated; remaining forecasts and cost inputs are still open.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: extend the customer-acquisition scenario through Year 5 without assuming accelerated growth.
+- AI did: Copilot updated the workbook and documentation to use 25 new students per year in Years 2 to 5, in addition to about 100 in Year 1.
+- We decided: use 100 total additional customers spread evenly over Years 2 to 5. The scenario totals 200 new customers and implies $20,000 of acquisition expense in Year 1 plus $5,000 per year in Years 2 to 5 at the assumed $200 CAC. These are planning assumptions, not a market forecast.
+- Reviewer flags: none. Workbook formulas continue to apply the four-year customer lifetime, so Year 1's cohort expires after Year 4.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: prevent double counting in the Year 1 fixed-cost budget.
+- AI did: Copilot changed the workbook to treat the approximately $120,000 amount as the total fixed-cost envelope; any supplied personnel, technology, and legal allocations reduce the unallocated remainder.
+- We decided: keep the $120,000 amount as an unverified aggregate, not as an extra cost above categories. Cost-category details remain pending.
+- Reviewer flags: none. Formula comments and the budget-overrun check were validated. Under the six-month base case, Year 1 modeled EBITDA is -$98,500 before any costs beyond the assumed total fixed-cost envelope; this remains a planning result, not an observed outcome.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: allocate the Year 1 fixed-cost envelope using the team's revised estimates.
+- AI did: Copilot added assumption inputs and workbook formulas for 25% personnel ($30,000), 50% technology ($60,000), and 25% office costs ($30,000) from the $120,000 total.
+- We decided: treat the percentages as preliminary estimates; they do not establish market costs. Legal/regulatory costs are not separately budgeted, and the technology amount still needs to be split between setup and recurring expense.
+- Reviewer flags: none. The three allocations reconcile to $120,000 and all 216 workbook formulas have explanatory comments.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: revise technology costs into setup and recurring components and keep the Year 1 budget internally consistent.
+- AI did: Copilot updated the workbook and SPEC.md to use $45,000 one-time technology setup plus $25,000 recurring technology, while retaining $30,000 personnel and $30,000 office costs. Year 1 fixed costs therefore increase to $130,000; $25,000 technology expense is carried through Years 2 to 5.
+- We decided: the estimates are preliminary; personnel and office recurrence and legal/regulatory costs remain unknown. The workbook no longer reports steady-state break-even until recurring fixed costs are defined.
+- Reviewer flags: none. Year 1 amounts reconcile to $130,000, formulas and comments were validated, first-year cost-recovery values were recalculated, and the six-month Year 1 EBITDA estimate is -$108,500.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: revise the fixed-cost allocation to retain the $120,000 Year 1 total.
+- AI did: Copilot updated the workbook and SPEC.md to use $25,000 personnel, $45,000 one-time technology setup, $25,000 recurring technology, and $25,000 office costs. Personnel, office and recurring technology are modeled through Years 2 to 5.
+- We decided: this supersedes the $130,000 draft. Known recurring costs total $75,000 annually; legal/regulatory costs remain unbudgeted, so steady-state break-even stays pending.
+- Reviewer flags: none. The Year 1 categories reconcile to $120,000, 228 workbook formulas have comments, first-year break-even values were recalculated, and six-month Year 1 EBITDA is -$98,500.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: add the current official regulatory fee that can be supported by a government source.
+- AI did: Copilot checked CNBV's FAQ and the Cámara de Diputados 2026 update of amounts. It added MXN 34,229.19 for LFD Article 29, fraction XXVI as a potential Year 1 technical-opinion fee and updated the workbook, SPEC.md and DECISIONS.md.
+- We decided: model the fee as a one-time Year 1 scenario expense, bringing modeled fixed costs to MXN 154,229.19. Applicability and renewal frequency remain TODO-verify; private legal counsel and ongoing compliance costs remain blank pending quotes.
+- Reviewer flags: the CNBV FAQ still displays the 2016 fee of MXN 21,292. The official 2026 update lists MXN 34,229.19 for fraction XXVI; the workbook notes this discrepancy and does not treat the fee as a complete legal/compliance budget. Validation passed with 229 commented formulas; Year 1 break-even is 718 six-month loans, and steady-state break-even remains pending.
+
+## 2026-11-16 · Najhid + Luciano
+- Goal: calculate annual borrower collections and assign an illustrative funding mix in the financial model.
+- AI did: Copilot added January/August origination-share inputs and formulas to the workbook. The formulas include all six installments for January originations, five for August originations in the same year, and the final August installment in the following year. It also set the required-capital split to 60% debt and 40% equity. SPEC.md and DECISIONS.md record both scenarios.
+- We decided: use a 50% January and 50% August split for the six-month base case, and a 60% debt / 40% equity split only as an illustrative allocation. Collections are scheduled gross amounts before missed-payment effects; intra-year liquidity and actual payment dates remain unmodeled. Debt interest, term, fees, repayment schedule, and availability are also unknown and unmodeled.
+- Reviewer flags: no separate reviewer run. Workbook formulas, comments and expected annual collection values were checked; the funding percentages total 100%. Recalculation in Excel or another spreadsheet engine remains to be confirmed.

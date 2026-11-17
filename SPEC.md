@@ -109,9 +109,15 @@ are therefore documented estimates rather than values generated automatically.
 - CAC: $200 per acquired customer.
 - Conservative customer activity case: 1 loan per year for 4 years, or 4 lifetime loans per
   customer. This is a team-selected planning assumption, not measured repeat behavior.
-- Fixed costs: approximately $120,000 for year one, retained from the prior planning
-  assumption. It remains unverified and mixes setup and recurring expenses; separate
-  these before treating the result as a steady-state annual break-even.
+- Year 1 fixed costs before the potential official fee: $120,000 in total: $25,000
+  personnel, $45,000 one-time technology setup, $25,000 recurring technology, and $25,000
+  office costs. Personnel, office and recurring technology are modeled at the same amounts
+  in Years 2 to 5. A potential $34,229.19 official technical-opinion fee is added to Year 1
+  for the SOFOM E.N.R. scenario, making modeled Year 1 fixed costs $154,229.19. Legal
+  counsel and ongoing regulatory/compliance costs are not included. These are team
+  estimates except for the cited official fee. Year 1 includes one-time costs and must not
+  be used as a recurring steady-state cost budget. Known recurring costs total $75,000
+  annually, excluding unbudgeted legal and regulatory costs.
 
 For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of funds `r`:
 - Interest = `P × 4% × n`.
@@ -126,56 +132,62 @@ For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of 
   `$200 / 4 = $50`.
 - For either horizon, contribution after CAC allocation = contribution before CAC minus
   the applicable CAC per loan.
-- Cost-recovery loans = ceiling(`$120,000 / contribution after CAC allocation`). There is
-  no finite break-even if contribution after CAC allocation is zero or negative.
+- Year 1 cost-recovery loans = ceiling(`$154,229.19 / contribution after CAC allocation`).
+  There is no finite break-even if contribution after CAC allocation is zero or negative.
+  Steady-state break-even is not calculated until legal/regulatory and other unbudgeted
+  recurring fixed costs are estimated.
 - Lifetime contribution before CAC = contribution before CAC × 4 loans. LTV/CAC is
   lifetime contribution before CAC divided by $200; this excludes fixed costs and should
   not be interpreted as net profit.
 
 The $200 CAC allocation estimates first-year economics when each loan belongs to a newly
 acquired customer taking one loan that year. The $50 allocation spreads one customer's CAC
-across four assumed lifetime loans and is the illustrative steady-state case. The $120,000
-budget mixes setup and recurring expenses, so neither volume is a confirmed operating
-break-even. Under this case, annual loan volume corresponds to annual customer-loans only
-if each customer takes one loan in that year.
+across four assumed lifetime loans. Year 1 cost recovery uses the $154,229.19 budget,
+including one-time setup and the potential official fee, and is not a recurring operating
+break-even. Steady-state fixed costs are
+unknown because legal/regulatory costs are not budgeted separately. The known recurring
+personnel, office and technology costs total $75,000 annually, excluding those unbudgeted
+costs. Under this case, annual loan volume corresponds to annual customer-loans only if
+each customer takes one loan in that year.
 
 At the $2,500 ticket, 7% simplified loss proxy and current 4%-per-month-of-term pricing:
 
 | Term | Total interest | Effective annual rate (approx.) | Merchant fee | Cost of funds | Simplified expected loss | Operating cost | Contribution before CAC | After $200 first-year CAC allocation | First-year cost-recovery loans | After $50 steady-state CAC allocation | Steady-state cost-recovery loans |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | -$55 | none | $95 | 1,264 |
-| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $215 | 559 | $365 | 329 |
-| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $485 | 248 | $635 | 189 |
-| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $755 | 159 | $905 | 133 |
+| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | -$55 | none | $95 | pending |
+| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $215 | 718 | $365 | pending |
+| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $485 | 318 | $635 | pending |
+| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $755 | 205 | $905 | pending |
 
 At the 6-month base term, estimated lifetime contribution before CAC is `$415 × 4 =
 $1,660` per customer, and LTV/CAC is `$1,660 / $200 = 8.3x`, before fixed costs. With one
-loan per newly acquired customer in year one, the first-year cost-recovery estimate is 559
-six-month loans. In the illustrative steady state, 329 six-month loans recover the fixed
-cost budget after CAC is spread across the four assumed lifetime loans. The $120,000 fixed
-cost figure includes unverified setup and recurring costs, so neither figure is a reliable
-operating target.
+loan per newly acquired customer in year one, the Year 1 cost-recovery estimate is 718
+six-month loans. Steady-state cost-recovery is pending because legal/regulatory costs are
+not budgeted. The Year 1 $154,229.19 total includes $45,000 of one-time technology setup
+and a potential official fee, so its recovery volume is not a recurring operating target.
 
 ### Default/delinquency sensitivity
 The following scenarios use the same simplified full-loss proxy on original ticket,
-allocate $200 CAC per first-year loan, and hold fixed costs at $120,000. They are scenarios,
-not observed default rates. The word "none" means no finite break-even under the assumptions.
+allocate $200 CAC per first-year loan, and hold Year 1 fixed costs at $154,229.19,
+including the potential official fee. They are
+scenarios, not observed default rates. The word "none" means no finite break-even under
+the assumptions.
 
 | Term | 5% proxy | 7% proxy | 10% proxy | 13% proxy |
 |---|---:|---:|---:|---:|
 | 3 months | none | none | none | none |
-| 6 months | 453 loans | 559 loans | 858 loans | 1,847 loans |
-| 9 months | 225 loans | 248 loans | 293 loans | 359 loans |
-| 12 months | 150 loans | 159 loans | 177 loans | 199 loans |
+| 6 months | 582 loans | 718 loans | 1,102 loans | 2,373 loans |
+| 9 months | 289 loans | 318 loans | 377 loans | 461 loans |
+| 12 months | 192 loans | 205 loans | 227 loans | 256 loans |
 
 ### Ticket sensitivity at 6 months and 7% proxy
 The $1,500 and $4,000 tickets are illustrative scenarios, not measured low/high averages.
 
 | Ticket | Contribution before CAC | After $200 first-year CAC allocation | First-year break-even loans |
 |---:|---:|---:|---:|
-| $1,500 | $233 | $33 | 3,637 |
-| $2,500 | $415 | $215 | 559 |
-| $4,000 | $688 | $488 | 246 |
+| $1,500 | $233 | $33 | 4,674 |
+| $2,500 | $415 | $215 | 718 |
+| $4,000 | $688 | $488 | 317 |
 
 - Effective annual rate: the annual rate at which the present value of equal monthly
   installments equals the price financed (a monthly IRR compounded to one year). Banxico
@@ -185,7 +197,7 @@ The $1,500 and $4,000 tickets are illustrative scenarios, not measured low/high 
   TODO-verify CAT calculation and disclosure rules with Condusef, including whether the
   Banxico draft changes published in November 2025 are in force.
 
-Validation status of the inputs (updated 2026-11-14; values remain assumptions unless a
+Validation status of the inputs (updated 2026-11-16; values remain assumptions unless a
 specific source and matching definition are documented):
 
 | Input | Current value | Status / source fit |
@@ -195,8 +207,11 @@ specific source and matching definition are documented):
 | Loans per customer | 4 lifetime, modeled as 1 per year for 4 years | Team-selected conservative assumption; actual repeat frequency is unknown. |
 | Customer lifetime | 4 years in this scenario | Implied by the 1-loan-per-year, 4-year planning case; actual retention is unknown. |
 | CAC | $200 per customer | Assumption; requires actual acquisition spending divided by new acquired customers. |
+| Customer acquisition forecast | About 100 new students in Year 1; 25 new students per year in Years 2 to 5 | Team-approved planning scenario, not a market forecast. At the assumed $200 CAC, acquisition expense is $20,000 in Year 1 and $5,000 per year in Years 2 to 5. This totals 200 new customers and $40,000 of acquisition expense over five years. |
+| Loan origination timing | 50% in January and 50% in August | Team-approved planning scenario for the cash model. With six-month loans and installments starting one month after origination, Year 1 collects 11/12 of its originations' contractual repayments; later years collect 11/12 of current-year and 1/12 of prior-year originations. These are scheduled amounts before missed-payment effects, not dated payment data. |
+| Funding mix | 60% debt; 40% equity | Team-approved illustrative split of required capital. Debt interest, term, fees, repayment schedule, and financing availability are not modeled, so this is not a validated funding plan. |
 | Operating and credit-check cost | $40 per loan | Assumption; obtain actual provider quotes and servicing cost breakdown. |
-| Fixed costs | ~$120,000 year one | Retained planning assumption, not verified. Separate one-time setup from recurring annual costs. |
+| Fixed costs | $154,229.19 Year 1: $120,000 team estimates plus $34,229.19 potential official fee | The 2026 fee schedule lists $34,229.19 for LFD Article 29 XXVI; CNBV's FAQ associates that fraction with the AML technical-opinion procedure but shows an outdated 2016 amount. Verify applicability and renewal frequency. Legal counsel and ongoing compliance costs remain unbudgeted. |
 | Cost of funds | 10% annual | Assumption; prior reference was 28-day TIIE at 6.5147% on 2026-11-06 (Banxico, DOF), not a lender quote. |
 
 ## Regulatory notes
@@ -229,8 +244,11 @@ Sourced:
   It was amended by Circulars 27/2009, 9/2015 and 15/2015. Banxico's report to Congress of
   September 2026 mentions a public consultation to modify it. TODO-verify the final text
   before calling any figure on screen "CAT".
-- CNBV FAQ for SOFOM E.N.R.: the fee for the technical opinion was $21,292 MXN for fiscal
-  year 2016 (outdated). TODO-verify the current fee in the Ley Federal de Derechos.
+- CNBV FAQ for SOFOM E.N.R. associates LFD article 29, fraction XXVI with the AML
+  technical-opinion procedure, but its displayed $21,292 MXN fee is for fiscal year 2016
+  and is outdated. The official 2026 update of amounts lists $34,229.19 for that fraction.
+  The model treats this as a potential Year 1 application fee; TODO-verify applicability
+  and renewal frequency with legal counsel.
 
 Not verified (no official source found; these stay as assumptions, TODO-verify with a
 fintech lawyer):
@@ -243,6 +261,10 @@ Existing regulatory and market references:
 - CONDUSEF, Sofomes booklet: https://www.condusef.gob.mx/documentos/111134_CUADERNOSYVIDEOS-SOFOMES.pdf
 - gob.mx, Sofomes No Reguladas: https://www.gob.mx/cms/uploads/attachment/file/109296/Sofomes_No_Reguladas.pdf
 - CNBV, FAQ SOFOM E.N.R.: https://www.cnbv.gob.mx/PrevencionDeLavadoDeDinero/Preguntas-Frecuentes/Paginas/PF-Sofomes.aspx
+- Cámara de Diputados, Ley Federal de Derechos, 2026 update of amounts (Anexo 19):
+  https://www.diputados.gob.mx/LeyesBiblio/ref/lfd/LFD_cant24_28dic25.doc
+- Cámara de Diputados, legislative history for the Ley Federal de Derechos:
+  https://www.diputados.gob.mx/LeyesBiblio/ref/lfd.htm
 - Banxico, Circular 21/2009 (CAT), DOF 2009-09-04: https://dof.gob.mx/nota_detalle.php?codigo=5108217&fecha=04/09/2009
 - Banxico, TIIE of 2026-11-06 (DOF): https://sidof.segob.gob.mx/notas/docFuente/5803287
 - Expansion, 2026-08-27, delinquency (CNBV IMORA): https://expansion.mx/economia/2026/08/27/mexicanos-gastaron-mundial-tarjeta-morosidad
@@ -264,8 +286,10 @@ financial-model inputs above):
 The Expansion article gives a reported transaction range, not an observed $2,500 average
 ticket. ENSAFI provides population-level financial-health context, not PagaFácil borrower
 default data. Kueski's own site is company-reported information. None of these sources
-substantiates the 7% delinquency/loss proxy, four loans per year, six-year customer life,
-$200 CAC, $40 operating cost or $120,000 fixed-cost budget; those remain planning inputs.
+substantiates the 7% delinquency/loss proxy, four lifetime loans, customer-acquisition
+scenario, $200 CAC, $40 operating cost or team fixed-cost estimates; those remain planning
+inputs. The official fee amount does not establish private legal or ongoing compliance
+costs.
 
 ## Changelog
 | Date | Change | Why | Approved by |
@@ -276,6 +300,11 @@ $200 CAC, $40 operating cost or $120,000 fixed-cost budget; those remain plannin
 | 2026-11-12 | Corrected the six-month affordability example to match the current 4%-per-month-of-term pricing | The previous $467 installment example used an earlier rate; the current $2,500 example is $516.67 per month and requires at least $1,722.24 monthly income | Najhid + Luciano |
 | 2026-11-14 | Changed the late-to-default threshold from 30 to more than 45 calendar days past due (more than three quincenas); the installment and associated loan become defaulted | Defines the delinquency rule for the MVP; the 45-day threshold is our design assumption | Najhid + Luciano |
 | 2026-11-14 | Rebased unit economics to 7% delinquency-balance proxy, $2,500 ticket, 4 loans/year for 6 years, $200 CAC and $40 operating cost; recalculated term margins, LTV and annual break-even | Replaces the prior 5%/3-loan/CAC $180 assumptions. Under the current 4% pricing, the 6-month contribution is about $415 before CAC, lifetime LTV about $9,960, LTV/CAC about 49.8x and first-year cost-recovery volume about 329 loans; the 7% proxy is not a measured default/loss rate | Najhid + Luciano |
+| 2026-11-16 | Revised Year 1 costs to $130,000: $30,000 personnel, $45,000 one-time technology, $25,000 recurring technology and $30,000 office; recalculated Year 1 break-even and marked steady-state break-even pending | Team estimates supersede the prior $120,000 and 25%/50%/25% allocation. Legal/regulatory costs are not separately budgeted; recurring personnel and office costs remain unknown | Najhid + Luciano |
+| 2026-11-16 | Superseded the $130,000 draft with a $120,000 Year 1 fixed-cost budget: $25,000 personnel, $45,000 one-time technology, $25,000 recurring technology and $25,000 office; modeled personnel, office and recurring technology through Years 2 to 5 | Reconciles the approved categories to the retained $120,000 total. Legal/regulatory costs remain unbudgeted, so steady-state break-even is pending | Najhid + Luciano |
+| 2026-11-16 | Added a potential $34,229.19 one-time Year 1 technical-opinion fee from the official 2026 LFD amount update; recalculated Year 1 cost recovery using total fixed costs of $154,229.19 | CNBV FAQ associates LFD article 29, fraction XXVI with the AML technical-opinion process but displays an outdated 2016 amount. Applicability and renewal frequency are TODO-verify; private legal and ongoing compliance costs remain unbudgeted | Najhid + Luciano |
+| 2026-11-16 | Added the approved 50% January and 50% August origination scenario to the six-month cash model | Calculates annual scheduled collections while carrying the final August installment into the following year; missed-payment effects and intra-year liquidity remain simplified | Najhid + Luciano |
+| 2026-11-16 | Set the illustrative funding split to 60% debt and 40% equity | Allocates the required raise by source only; debt service and financing terms remain unmodeled, so the split is not a financing plan | Najhid + Luciano |
 - LGOAAC, official text: https://www.diputados.gob.mx/LeyesBiblio/pdf/LGOAAC.pdf
 - Banxico, Circular 21/2009 (CAT): https://www.banxico.org.mx/marco-normativo/normativa-emitida-por-el-banco-de-mexico/circular-21-2009/costo-anual-total-disposicion.html
 - Banxico report to Congress, 2026-09-14: https://gaceta.diputados.gob.mx/PDF/66/2026/sep/Banxico-20260914.pdf
