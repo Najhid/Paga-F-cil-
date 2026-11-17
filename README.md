@@ -19,14 +19,18 @@ the next disable date in the web app settings.
 
 ## What the demo shows
 
-1. León signs in, checks out at the campus bookstore and chooses 3, 6, 9 or 12 months.
+1. A student signs in to a student-facing account, checks out at the campus bookstore and chooses 3, 6, 9 or 12 months. The demo uses León's invented account.
 2. The app shows interest, total repayment, installments, schedule and an effective annual
    rate as a reference figure, not the official CAT.
-3. A rule-based check approves a loan only within the credit limit and monthly-income share.
+3. A server-side rule-based check automatically approves or rejects the student's offer based
+   on the credit limit and monthly-income share; there is no staff approval screen or admin role.
 4. Once accepted, the app records the simulated merchant payout and installment schedule.
    The student can mark installments paid or late and see the remaining balance.
 5. Unpaid installments become late after their due date, and defaulted after more than 45
    calendar days past due.
+
+The interface uses the PagaFácil logo and a responsive student-facing layout for sign-in,
+checkout quotes and installment tracking. Approval and payment status remain simulated.
 
 ## Run locally
 
@@ -101,10 +105,12 @@ market value; negative method outputs indicate that the scenario does not suppor
 positive pre-money value. Investor ownership uses the modeled equity portion of the funding
 need, not total debt and equity capital. The workbook reports modeled annual revenue per
 active customer, while disclosing that churn is unmeasured and the exact CAC payback month
-is not modeled. It includes an UP CDMX population ceiling based on the user-provided high
-estimate of 16,500 students, but the source, year and campus scope have not been verified.
-The resulting 100%-adoption revenue and financed-volume figures are hypothetical ceilings,
-not TAM/SAM or demand forecasts. Ten exploratory interviews were reported with finance
+is not modeled. The workbook retains the user-reported 16,500 student count only as an
+unverified population scenario. Data México reports 14,693 enrollments for Universidad
+Panamericana overall in 2022, not a current UP CDMX campus count; the different year and
+scope do not validate the user-reported range. The resulting 100%-adoption revenue and
+financed-volume figures are conditional scenario outputs, not TAM/SAM, eligible-borrower
+counts or demand forecasts. Ten exploratory interviews were reported with finance
 students around October; the year and exact count without credit cards were not recorded,
 so this is not representative demand evidence. The workbook's valuation assumptions are
 illustrative, not market-derived or a fair-market valuation. It includes an unverified

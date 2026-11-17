@@ -1,12 +1,30 @@
 {% extends "base.html" %}
 {% block title %}Sign in · PagaFácil{% endblock %}
+{% block main_class %}login-shell{% endblock %}
 {% block content %}
-<h1>Sign in</h1>
-{% if error %}<p class="error">{{ error }}</p>{% endif %}
-<form method="post" action="{{ url_for('login') }}">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <p><label>Username <input name="username" autocomplete="username" required></label></p>
-  <p><label>Password <input name="password" type="password" autocomplete="current-password" required></label></p>
-  <button type="submit">Sign in</button>
-</form>
+<section class="login-card" aria-label="Sign in to PagaFácil">
+  <div class="login-brand-panel">
+    <div class="logo-frame">
+      <img src="{{ url_for('static', filename='pagafacil-logo.jpg') }}" alt="PagaFácil">
+    </div>
+    <p class="eyebrow">A simpler way to pay over time</p>
+    <h1>Your campus purchases, made more manageable.</h1>
+    <p>Review your payment options, choose a term, and keep track of your installments in one place.</p>
+  </div>
+  <div class="login-form-panel">
+    <p class="eyebrow">Student account</p>
+    <h2>Welcome back</h2>
+    <p class="subtitle">Sign in to review your payment plans and bookstore checkout options.</p>
+    {% if error %}<p class="notice error" role="alert">{{ error }}</p>{% endif %}
+    <form method="post" action="{{ url_for('login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="button-primary" type="submit">Sign in</button>
+    </form>
+    <p class="login-footer-note">This is a course prototype. No real payments or credit checks are processed.</p>
+  </div>
+</section>
 {% endblock %}

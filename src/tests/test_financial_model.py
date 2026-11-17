@@ -273,7 +273,7 @@ def test_unresolved_valuation_outputs_stay_blank(tmp_path):
     )
 
 
-def test_missing_campus_population_keeps_market_ceiling_outputs_pending(tmp_path):
+def test_missing_population_keeps_scenario_outputs_pending(tmp_path):
     workbook_path = tmp_path / WORKBOOK_NAME
     copyfile(WORKBOOK_PATH, workbook_path)
     workbook = load_workbook(workbook_path, data_only=False)

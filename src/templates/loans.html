@@ -1,31 +1,47 @@
 {% extends "base.html" %}
 {% block title %}My loans · PagaFácil{% endblock %}
 {% block content %}
-<h1>My loans</h1>
+<header class="page-heading">
+  <div>
+    <p class="eyebrow">Your account</p>
+    <h1>My payment plans</h1>
+    <p class="subtitle">Review your balances, due dates and payment history.</p>
+  </div>
+  <a class="button button-primary" href="{{ url_for('checkout') }}">Shop at the bookstore</a>
+</header>
 {% if loans %}
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Loan</th><th scope="col">Created</th><th scope="col">Price</th>
-      <th scope="col">Term</th><th scope="col">Total to repay</th><th scope="col">Balance</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for loan in loans %}
-    <tr>
-      <th scope="row"><a href="{{ url_for('loan_detail', loan_id=loan.id) }}">#{{ loan.id }}</a></th>
-      <td>{{ loan.created_on }}</td>
-      <td>{{ loan.price|mxn }}</td>
-      <td>{{ loan.term_months }} months</td>
-      <td>{{ loan.total_to_repay|mxn }}</td>
-      <td>{{ loan.balance|mxn }}</td>
-      <td>{{ loan.status }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<section class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Plan</th><th scope="col">Purchase date</th><th scope="col">Purchase</th>
+          <th scope="col">Term</th><th scope="col">Total</th><th scope="col">Remaining balance</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for loan in loans %}
+        <tr>
+          <th scope="row"><a href="{{ url_for('loan_detail', loan_id=loan.id) }}">Plan #{{ loan.id }}</a></th>
+          <td>{{ loan.created_on }}</td>
+          <td>{{ loan.price|mxn }}</td>
+          <td>{{ loan.term_months }} months</td>
+          <td>{{ loan.total_to_repay|mxn }}</td>
+          <td><strong>{{ loan.balance|mxn }}</strong></td>
+          <td><span class="decision status">{{ loan.status }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 {% else %}
-<p>You have no loans yet. Go to Checkout to take one.</p>
+<section class="card empty-state">
+  <p class="eyebrow">Nothing to track yet</p>
+  <h2>You have no loans yet</h2>
+  <p>Your bookstore payment plans will appear here after you choose one.</p>
+  <a class="button button-primary" href="{{ url_for('checkout') }}">Explore payment plans</a>
+</section>
 {% endif %}
 {% endblock %}
