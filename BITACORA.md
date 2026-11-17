@@ -54,3 +54,9 @@ Template:
 - AI did: Copilot in VS Code reviewed `final_push.zip`, integrated its Flask/SQLite flow, tests and docs, corrected the premature late-payment behavior in `src/loans.py`, and added regression tests. The selected model was not recorded in this session.
 - We decided: both partners approved adding the SQLite users, merchant, loans and installments schema. We kept test credentials out of the repository and did not add dependencies.
 - Reviewer flags: the ZIP allowed marking an installment late before its due date; the implementation now rejects that action and tests the future-due and overdue cases. No separate reviewer agent was run.
+
+## 2026-11-16 · Najhid
+- Goal: deploy the core flow to PythonAnywhere and verify the public test URL.
+- AI did: Copilot guided the manual Flask deployment, configured the Python 3.11 virtual environment and WSGI import, and updated the README with the URL. No credentials or secret keys were added to the repository.
+- We decided: use `https://najhid21.pythonanywhere.com` for the demo. The site loaded, León signed in, a six-month loan was recorded, and marking one installment paid reduced the displayed balance. PythonAnywhere's free site needs a monthly renewal; its dashboard showed a disable date of 2026-12-17.
+- Reviewer flags: none. The deployed loan detail displayed 2026-11-17 as its creation date while the local date was 2026-11-16, so the server timezone/date difference remains to be checked.
