@@ -19,14 +19,18 @@ the next disable date in the web app settings.
 
 ## What the demo shows
 
-1. León signs in, checks out at the campus bookstore and chooses 3, 6, 9 or 12 months.
+1. A student signs in to a student-facing account, checks out at the campus bookstore and chooses 3, 6, 9 or 12 months. The demo uses León's invented account.
 2. The app shows interest, total repayment, installments, schedule and an effective annual
    rate as a reference figure, not the official CAT.
-3. A rule-based check approves a loan only within the credit limit and monthly-income share.
+3. A server-side rule-based check automatically approves or rejects the student's offer based
+   on the credit limit and monthly-income share; there is no staff approval screen or admin role.
 4. Once accepted, the app records the simulated merchant payout and installment schedule.
    The student can mark installments paid or late and see the remaining balance.
 5. Unpaid installments become late after their due date, and defaulted after more than 45
    calendar days past due.
+
+The interface uses the PagaFácil logo and a responsive student-facing layout for sign-in,
+checkout quotes and installment tracking. Approval and payment status remain simulated.
 
 ## Run locally
 

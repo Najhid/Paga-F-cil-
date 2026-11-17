@@ -16,6 +16,16 @@ def test_format_percent_uses_one_decimal() -> None:
     assert checkout_app.format_percent(Decimal("113.33")) == "113.3%"
 
 
+def test_student_login_serves_branded_local_assets(client) -> None:
+    page = client.get("/login")
+
+    assert page.status_code == 200
+    assert 'alt="PagaFácil"' in page.get_data(as_text=True)
+    assert "/static/app.css" in page.get_data(as_text=True)
+    assert client.get("/static/app.css").mimetype == "text/css"
+    assert client.get("/static/pagafacil-logo.jpg").mimetype == "image/jpeg"
+
+
 def test_checkout_shows_every_term_with_costs(client, login) -> None:
     login("leon")
 

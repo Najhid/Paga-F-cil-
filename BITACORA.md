@@ -146,3 +146,10 @@ Template:
 - We decided: no pitch deck was created at Najhid's request. Do not replace missing campus, interview, CAC, legal/compliance quote, lender, or founder information with invented values. Keep the 16,500 workbook input only for the existing illustrative scenario until its source, year, and scope are reconciled.
 - Reviewer flags: no separate reviewer run. Validation passed with 68 tests; the workbook's 274 formulas evaluated without spreadsheet errors and include explanatory comments.
 - Pending: a current UP CDMX campus enrollment source; interview records and willingness-to-borrow evidence; measured CAC and acquisition funnel; legal and compliance quotes; lender terms; founder roles and ownership; pitch deck; final demo and course submission.
+
+## 2026-11-16 · Najhid + Copilot
+- Goal: make the app feel like a student-facing PagaFácil product and clarify who makes the approval decision.
+- AI did: integrated the user-provided logo, added a responsive visual system, and redesigned sign-in, checkout, payment-plan list and installment details. Updated the README and added a test that verifies the login page and local assets. Approval logic, data model, and dependencies were not changed.
+- We decided: keep the one-role flow defined in SPEC.md. The student sees the offer and the server applies the automatic rule-based approval; signing in as León is only how the invented demo account is shown. No staff dashboard or manual underwriting flow was added.
+- Reviewer flags: none. Initial UI tests identified existing text contracts; the revised labels preserve them. Validation passed with 69 tests, and Flask serves the CSS and logo successfully.
+- Pending: inspect the screens in the browser and get Luciano's review before merging or presenting the visual change.

@@ -3,40 +3,36 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#123b67">
     <title>{% block title %}PagaFácil{% endblock %}</title>
-    <style>
-      body { font-family: system-ui, sans-serif; margin: 0; color: #12303a; }
-      main { max-width: 62rem; margin: 0 auto; padding: 1rem; }
-      .simulated { background: #fff3cd; padding: .6rem 1rem; font-size: .9rem; }
-      nav { display: flex; gap: 1rem; align-items: center; padding: .6rem 1rem; background: #0b6e74; color: #fff; }
-      nav a { color: #fff; }
-      nav form { margin-left: auto; }
-      table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-      th, td { border: 1px solid #b7c9cc; padding: .4rem .6rem; text-align: left; }
-      th { background: #e8f2f2; }
-      .error { color: #8a1f1f; font-weight: 600; }
-      button { cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
   </head>
   <body>
-    <div class="simulated">
-      Simulated environment: all users, merchants and amounts are invented. No real money moves
-      and no bank or credit bureau is used. The merchant payout is a database record only.
-    </div>
     {% if user %}
-    <nav>
-      <strong>PagaFácil</strong>
-      <a href="{{ url_for('checkout') }}">Checkout</a>
-      <a href="{{ url_for('my_loans') }}">My loans</a>
-      <span>Signed in as {{ user['display_name'] }}</span>
-      <form method="post" action="{{ url_for('logout') }}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button type="submit">Sign out</button>
-      </form>
-    </nav>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="wordmark" href="{{ url_for('checkout') }}" aria-label="PagaFácil home">
+          Paga<span>Fácil</span>
+        </a>
+        <div class="nav-links">
+          <a href="{{ url_for('checkout') }}">Checkout</a>
+          <a href="{{ url_for('my_loans') }}">My loans</a>
+        </div>
+        <div class="account-menu">
+          <span class="account-name">Hi, {{ user['display_name'] }}</span>
+          <form method="post" action="{{ url_for('logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="button button-quiet" type="submit">Sign out</button>
+          </form>
+        </div>
+      </nav>
+    </header>
     {% endif %}
-    <main>
+    <main class="{% block main_class %}page-shell{% endblock %}">
       {% block content %}{% endblock %}
     </main>
+    <footer class="site-footer">
+      <p>Simulated environment: all accounts, purchases and balances are simulated. No real money moves.</p>
+    </footer>
   </body>
 </html>

@@ -1,45 +1,78 @@
 {% extends "base.html" %}
 {% block title %}Loan #{{ loan['id'] }} · PagaFácil{% endblock %}
 {% block content %}
-<h1>Loan #{{ loan['id'] }}</h1>
-<p>Status: <strong>{{ summary.status }}</strong>. Balance: <strong>{{ summary.balance|mxn }}</strong>.</p>
-<ul>
-  <li>Price: {{ summary.price|mxn }}, term: {{ summary.term_months }} months, created on {{ summary.created_on }}</li>
-  <li>Interest: {{ total_interest|mxn }}. Total to repay: {{ summary.total_to_repay|mxn }}</li>
-  <li>Merchant fee (4% of the price): {{ merchant_fee|mxn }}. Simulated payout to the bookstore: {{ funded_amount|mxn }}</li>
-</ul>
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Installment</th><th scope="col">Due date</th><th scope="col">Amount</th>
-      <th scope="col">Status</th><th scope="col">Paid on</th><th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in installments %}
-    <tr>
-      <th scope="row">{{ item.number }}</th>
-      <td>{{ item.due_date }}</td>
-      <td>{{ item.amount|mxn }}</td>
-      <td>{{ item.status }}</td>
-      <td>{{ item.paid_date or "" }}</td>
-      <td>
-        {% if item.status in ("pending", "late") %}
-        <form method="post" action="{{ url_for('update_installment', loan_id=loan['id'], number=item.number, action='paid') }}" style="display:inline">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit">Mark as paid</button>
-        </form>
-        {% endif %}
-        {% if item.status in ("pending", "late") and item.due_date < today.isoformat() %}
-        <form method="post" action="{{ url_for('update_installment', loan_id=loan['id'], number=item.number, action='late') }}" style="display:inline">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit">Mark as late</button>
-        </form>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<p>An installment unpaid more than 45 days after its due date becomes defaulted, and so does the loan. Defaulted installments cannot be changed: collections are out of scope.</p>
+<header class="page-heading">
+  <div>
+    <p class="eyebrow"><a href="{{ url_for('my_loans') }}">My payment plans</a> / Plan #{{ loan['id'] }}</p>
+    <h1>Payment plan details</h1>
+    <p class="subtitle">Created on {{ summary.created_on }} · {{ summary.term_months }} monthly installments</p>
+  </div>
+  <span class="decision status">{{ summary.status }}</span>
+</header>
+
+<section class="card" aria-label="Payment plan summary">
+  <div class="metric-grid">
+    <div class="metric">
+      <span class="metric-label">Purchase amount</span>
+      <span class="metric-value">{{ summary.price|mxn }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Total to repay</span>
+      <span class="metric-value">{{ summary.total_to_repay|mxn }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Balance</span>
+      <span class="metric-value">{{ summary.balance|mxn }}</span>
+    </div>
+  </div>
+  <p>Status: <strong>{{ summary.status }}</strong></p>
+  <p>Total to repay: {{ summary.total_to_repay|mxn }}</p>
+  <p class="muted">Balance: <strong>{{ summary.balance|mxn }}</strong></p>
+  <p class="notice notice-info">Interest: {{ total_interest|mxn }}. Merchant fee (4% of the price): {{ merchant_fee|mxn }}. Simulated payout to the bookstore: {{ funded_amount|mxn }}. No real money moves.</p>
+</section>
+
+<section class="section-spacer" aria-labelledby="installments-heading">
+  <p class="eyebrow">Track your progress</p>
+  <h2 id="installments-heading">Installments</h2>
+  <section class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Installment</th><th scope="col">Due date</th><th scope="col">Amount</th>
+            <th scope="col">Status</th><th scope="col">Paid on</th><th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in installments %}
+          <tr>
+            <th scope="row">{{ item.number }} of {{ summary.term_months }}</th>
+            <td>{{ item.due_date }}</td>
+            <td><strong>{{ item.amount|mxn }}</strong></td>
+            <td><span class="decision status">{{ item.status }}</span></td>
+            <td>{{ item.paid_date or "Not paid" }}</td>
+            <td>
+              <div class="installment-actions">
+                {% if item.status in ("pending", "late") %}
+                <form method="post" action="{{ url_for('update_installment', loan_id=loan['id'], number=item.number, action='paid') }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button type="submit">Mark as paid</button>
+                </form>
+                {% endif %}
+                {% if item.status in ("pending", "late") and item.due_date < today.isoformat() %}
+                <form method="post" action="{{ url_for('update_installment', loan_id=loan['id'], number=item.number, action='late') }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="late-action" type="submit">Mark as late</button>
+                </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
+<p class="notice notice-info">This prototype lets you simulate payment statuses. An installment becomes defaulted after more than 45 days past due; defaulted installments cannot be changed.</p>
 {% endblock %}
