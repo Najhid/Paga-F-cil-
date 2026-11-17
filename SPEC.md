@@ -107,7 +107,8 @@ are therefore documented estimates rather than values generated automatically.
   requires the balance definition, observation period, cure rate and recoveries.
 - Operating and credit-check cost: $40 per loan.
 - CAC: $200 per acquired customer.
-- Customer activity: 4 loans per year for 6 years, or 24 lifetime loans per customer.
+- Conservative customer activity case: 1 loan per year for 4 years, or 4 lifetime loans per
+  customer. This is a team-selected planning assumption, not measured repeat behavior.
 - Fixed costs: approximately $120,000 for year one, retained from the prior planning
   assumption. It remains unverified and mixes setup and recurring expenses; separate
   these before treating the result as a steady-state annual break-even.
@@ -119,63 +120,62 @@ For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of 
 - Simplified expected loss = `P × d`.
 - Contribution before CAC = interest + merchant fee - cost of funds - simplified expected
   loss - $40.
-- First-year CAC allocated per loan, if those loans come from newly acquired customers =
+- First-year CAC allocated per loan, if each newly acquired customer takes 1 loan in that
+  year = `$200 / 1 = $200`.
+- Steady-state CAC allocated per loan, if customers take 1 loan per year for 4 years =
   `$200 / 4 = $50`.
-- Steady-state CAC allocated per loan, if customers generate 4 loans/year for 6 years =
-  `$200 / 24 = $8.33`.
 - For either horizon, contribution after CAC allocation = contribution before CAC minus
   the applicable CAC per loan.
 - Cost-recovery loans = ceiling(`$120,000 / contribution after CAC allocation`). There is
   no finite break-even if contribution after CAC allocation is zero or negative.
-- Lifetime contribution before CAC = contribution before CAC × 24 loans. LTV/CAC is
+- Lifetime contribution before CAC = contribution before CAC × 4 loans. LTV/CAC is
   lifetime contribution before CAC divided by $200; this excludes fixed costs and should
   not be interpreted as net profit.
 
-The $50 CAC allocation estimates first-year economics when each loan in the calculation
-belongs to a newly acquired customer who takes four loans that year. The $8.33 allocation
-spreads one customer's CAC across all 24 assumed lifetime loans and is the illustrative
-steady-state case. The $120,000 budget mixes setup and recurring expenses, so neither
-volume is a confirmed operating break-even. Dividing annual loan volume by four gives
-customer-equivalents only if each customer actually takes four loans in that year.
+The $200 CAC allocation estimates first-year economics when each loan belongs to a newly
+acquired customer taking one loan that year. The $50 allocation spreads one customer's CAC
+across four assumed lifetime loans and is the illustrative steady-state case. The $120,000
+budget mixes setup and recurring expenses, so neither volume is a confirmed operating
+break-even. Under this case, annual loan volume corresponds to annual customer-loans only
+if each customer takes one loan in that year.
 
 At the $2,500 ticket, 7% simplified loss proxy and current 4%-per-month-of-term pricing:
 
-| Term | Total interest | Effective annual rate (approx.) | Merchant fee | Cost of funds | Simplified expected loss | Operating cost | Contribution before CAC | After $50 first-year CAC allocation | First-year cost-recovery loans | After $8.33 steady-state CAC allocation | Steady-state cost-recovery loans |
+| Term | Total interest | Effective annual rate (approx.) | Merchant fee | Cost of funds | Simplified expected loss | Operating cost | Contribution before CAC | After $200 first-year CAC allocation | First-year cost-recovery loans | After $50 steady-state CAC allocation | Steady-state cost-recovery loans |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | $95 | 1,264 | $136.67 | 879 |
-| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $365 | 329 | $406.67 | 296 |
-| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $635 | 189 | $676.67 | 178 |
-| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $905 | 133 | $946.67 | 127 |
+| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | -$55 | none | $95 | 1,264 |
+| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $215 | 559 | $365 | 329 |
+| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $485 | 248 | $635 | 189 |
+| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $755 | 159 | $905 | 133 |
 
-At the 6-month base term, estimated lifetime contribution before CAC is `$415 × 24 =
-$9,960` per customer, and LTV/CAC is `$9,960 / $200 = 49.8x`, before fixed costs.
-The first-year break-even estimate is 329 six-month loan-equivalents; with whole customers
-acquired and four loans per customer that year, 83 customers would originate 332 loans.
-The steady-state estimate is 296 six-month loans (about 74 active customer-equivalents at
-four loans/year, with CAC amortized over the assumed six-year life). The $120,000 fixed
-cost figure includes unverified setup and recurring costs, so neither figure is yet a
-reliable operating target.
+At the 6-month base term, estimated lifetime contribution before CAC is `$415 × 4 =
+$1,660` per customer, and LTV/CAC is `$1,660 / $200 = 8.3x`, before fixed costs. With one
+loan per newly acquired customer in year one, the first-year cost-recovery estimate is 559
+six-month loans. In the illustrative steady state, 329 six-month loans recover the fixed
+cost budget after CAC is spread across the four assumed lifetime loans. The $120,000 fixed
+cost figure includes unverified setup and recurring costs, so neither figure is a reliable
+operating target.
 
 ### Default/delinquency sensitivity
 The following scenarios use the same simplified full-loss proxy on original ticket,
-allocate $50 CAC per first-year loan, and hold fixed costs at $120,000. They are scenarios,
+allocate $200 CAC per first-year loan, and hold fixed costs at $120,000. They are scenarios,
 not observed default rates. The word "none" means no finite break-even under the assumptions.
 
 | Term | 5% proxy | 7% proxy | 10% proxy | 13% proxy |
 |---|---:|---:|---:|---:|
-| 3 months | 828 loans | 1,264 loans | 6,000 loans | none |
-| 6 months | 290 loans | 329 loans | 414 loans | 559 loans |
-| 9 months | 176 loans | 189 loans | 215 loans | 248 loans |
-| 12 months | 126 loans | 133 loans | 145 loans | 159 loans |
+| 3 months | none | none | none | none |
+| 6 months | 453 loans | 559 loans | 858 loans | 1,847 loans |
+| 9 months | 225 loans | 248 loans | 293 loans | 359 loans |
+| 12 months | 150 loans | 159 loans | 177 loans | 199 loans |
 
 ### Ticket sensitivity at 6 months and 7% proxy
 The $1,500 and $4,000 tickets are illustrative scenarios, not measured low/high averages.
 
-| Ticket | Contribution before CAC | After $50 first-year CAC allocation | First-year break-even loans |
+| Ticket | Contribution before CAC | After $200 first-year CAC allocation | First-year break-even loans |
 |---:|---:|---:|---:|
-| $1,500 | $233 | $183 | 656 |
-| $2,500 | $415 | $365 | 329 |
-| $4,000 | $688 | $638 | 189 |
+| $1,500 | $233 | $33 | 3,637 |
+| $2,500 | $415 | $215 | 559 |
+| $4,000 | $688 | $488 | 246 |
 
 - Effective annual rate: the annual rate at which the present value of equal monthly
   installments equals the price financed (a monthly IRR compounded to one year). Banxico
@@ -192,8 +192,8 @@ specific source and matching definition are documented):
 |---|---:|---|
 | Average ticket | $2,500 | Assumption. Expansion reports Kueski/Amazon purchases from $299 to $5,000; this supports a possible market range, not a $2,500 average. |
 | Delinquency/loss proxy | 7% of balances | User-provided modeling assumption. The cited sources do not establish this as PagaFácil's default or net loss rate; proxy treatment is deliberately simplified and must be replaced with comparable portfolio data and recovery rates. |
-| Loans per customer | 4 per year | Assumption; supplied sources do not establish PagaFácil repeat frequency. |
-| Customer lifetime | 6 years | Assumption; supplied sources do not verify retention or active lifespan. |
+| Loans per customer | 4 lifetime, modeled as 1 per year for 4 years | Team-selected conservative assumption; actual repeat frequency is unknown. |
+| Customer lifetime | 4 years in this scenario | Implied by the 1-loan-per-year, 4-year planning case; actual retention is unknown. |
 | CAC | $200 per customer | Assumption; requires actual acquisition spending divided by new acquired customers. |
 | Operating and credit-check cost | $40 per loan | Assumption; obtain actual provider quotes and servicing cost breakdown. |
 | Fixed costs | ~$120,000 year one | Retained planning assumption, not verified. Separate one-time setup from recurring annual costs. |
@@ -281,3 +281,4 @@ $200 CAC, $40 operating cost or $120,000 fixed-cost budget; those remain plannin
 - Banxico report to Congress, 2026-09-14: https://gaceta.diputados.gob.mx/PDF/66/2026/sep/Banxico-20260914.pdf
 
 | 2026-11-15 | Regulatory notes rewritten after reading LGOAAC arts. 56, 87-B and 87-P and identifying the Banxico CAT circular; effective annual rate shown on the quote screen as a reference figure | Closes review item 5 for the sourced claims; timeline and cost figures remain unverified | Najhid + Luciano |
+| 2026-11-16 | Replaced the 24-loan lifetime case with a conservative 4-loan lifetime case, modeled as 1 loan/year for 4 years; recalculated CAC allocation, LTV/CAC and break-even sensitivities | The earlier repeat-use assumption was unsupported and overstated 6-month LTV/CAC (49.8x); the selected case gives $1,660 lifetime contribution before CAC and 8.3x LTV/CAC | Najhid + Luciano |
