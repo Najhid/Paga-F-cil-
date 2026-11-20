@@ -1,7 +1,9 @@
 # PagaFácil
 
-A Buy Now, Pay Later (BNPL) lending prototype for university students in Mexico.
-PagaFácil pays the merchant and the student repays in monthly installments with interest.
+A Buy Now, Pay Later (BNPL) prototype for university students in Mexico, designed around a
+fintech-bank partnership. The demo simulates merchant payout and installment tracking;
+the bank partner's role in lending, funding, receivable ownership, revenue and losses is
+not represented as a real contract.
 We never hold client money and never pay yield.
 
 Course: FIN506 Financial Technology · Universidad Panamericana · Fall 2026
@@ -97,26 +99,37 @@ With the virtual environment active, run:
 python -m pytest
 ```
 
-The test suite also evaluates the financial-model workbook formulas, checks cash
-collections, and confirms that valuation outputs stay blank when required assumptions are
-missing. It also checks the workbook's illustrative valuation scenario and one-input-at-a-
-time sensitivities. The valuation assumptions are not market-derived and are not a fair
-market value; negative method outputs indicate that the scenario does not support a
-positive pre-money value. Investor ownership uses the modeled equity portion of the funding
-need, not total debt and equity capital. The workbook reports modeled annual revenue per
-active customer, while disclosing that churn is unmeasured and the exact CAC payback month
-is not modeled. The workbook retains the user-reported 16,500 student count only as an
-unverified population scenario. Data México reports 14,693 enrollments for Universidad
-Panamericana overall in 2022, not a current UP CDMX campus count; the different year and
-scope do not validate the user-reported range. The resulting 100%-adoption revenue and
-financed-volume figures are conditional scenario outputs, not TAM/SAM, eligible-borrower
-counts or demand forecasts. Ten exploratory interviews were reported with finance
-students around October; the year and exact count without credit cards were not recorded,
-so this is not representative demand evidence. The workbook's valuation assumptions are
-illustrative, not market-derived or a fair-market valuation. It includes an unverified
-planning scenario of MXN 60,000 for one-time Year 1 legal counsel and MXN 30,000 per year
-for legal/compliance costs; these are assumptions, not quotes, and must be validated. The
-workbook formulas are evaluated in memory; open the file in Excel to refresh its displayed
+The test suite evaluates the financial-model workbook formulas and checks scheduled cash
+collections. Valuation outputs remain blank until PagaFácil's bank-partner revenue and
+cost allocation and the required financing structure are defined. Earlier valuation
+outputs were illustrative only and are superseded.
+
+The prior 60% debt / 40% equity split and SOFOM-specific fees have been superseded for the
+bank-partner scenario. Loan-level contribution is shown only as a portfolio illustration.
+PagaFácil standalone revenue, funding cost, credit-loss allocation, partner charges,
+EBITDA, break-even and valuation require the bank agreement and related quotes; they are
+not inferred from Kueski's consumer APR or public benchmark rates.
+In the workbook, the `Bank Partner Economics` sheet holds these evidence-gated inputs, and
+the company `P&L` calculates only from them. Blank inputs mean unknown, not zero.
+
+The market inputs are finalized for this delivery as follows: Data México reports 14,693
+matriculated students for Universidad Panamericana overall in 2022, while 6,763 is associated
+with Zacatecas / Benito Juárez and not with UP CDMX. Neither number is used as a verified
+UP CDMX population or market ceiling. The workbook retains 14,693 only for an institution-
+wide 100%-adoption context scenario, not as TAM, SAM or demand.
+
+The transaction range is a planning range, not a measured average: MXN 2,500 is the central
+P&L ticket and MXN 2,500–4,000 is the sensitivity range. The 25 student interviews support
+this range as a product-design hypothesis. Public Kueski/Amazon prices do not replace
+measured bookstore or campus spending.
+
+The project used 25 real student questionnaires: 13 Finance and 12 Law students in 3rd to
+5th semester. The sample is a convenience sample and supports product hypotheses, not
+full-population demand. It reported 48% without own formal credit history, 88% willing to
+allow a Buró consultation, 76% willing to accept transparent interest, and 92% preferring
+3-month or 6-month terms.
+
+The workbook formulas are evaluated in memory; open the file in Excel to refresh displayed
 cached values.
 
 ## Project files

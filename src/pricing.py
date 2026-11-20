@@ -49,7 +49,8 @@ def effective_annual_rate(
     customer repays part of the principal every month and so owes less than the full price
     for most of the term. The internal rate of return measures the cost on the balance
     actually owed. This is a reference figure, not the official CAT (Banxico Circular
-    21/2009), which includes every cost of the credit. TODO-verify the CAT with Condusef.
+    21/2009), which includes every cost of the credit. The displayed figure is explicitly
+    an effective annual rate, not the official CAT.
     """
     if principal <= ZERO or not payments:
         raise ValueError("Principal and payments are required.")
