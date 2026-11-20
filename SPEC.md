@@ -1,13 +1,16 @@
 # SPEC: PagaFácil
 
-Last updated: 2026-11-16 · Owners: Angel Najhid Flores Cartagena + Luciano Yitani Chapa
+Last updated: 2026-11-20 · Owners: Angel Najhid Flores Cartagena + Luciano Yitani Chapa
 
 ## Problem
 University students in Mexico often have no credit card and a thin credit history, so they
 cannot split a large one-off purchase (textbooks and school supplies at the start of the
 semester) into payments. Today they either pay all at once, borrow from family, or use
-informal credit. PagaFácil is a Buy Now, Pay Later (BNPL) lender: it pays the merchant
-and the student repays PagaFácil in monthly installments with interest.
+informal credit. PagaFácil is a BNPL fintech with a bank partnership. The prototype
+simulates the checkout, merchant payout and installment tracking; it does not establish
+which party is the lender of record, owns the receivable, funds the loan, receives interest,
+or bears credit losses. Do not present the simulated gross loan economics as PagaFácil's
+standalone revenue or cost of funds.
 
 ## User
 León Lara, 21, a university student who has just started working part-time, has no credit
@@ -89,39 +92,47 @@ Anything not on this list needs both partners plus a bitacora entry.
 - Native mobile app; more than one user role or more than one merchant
 - Late fees and collections process (default is modeled only as an assumption)
 - Savings, deposits, yield or investment features (PagaFácil never holds client money)
-- Real regulatory registration (SOFOM E.N.R. is analyzed, not implemented)
+- SOFOM E.N.R. registration or operation; PagaFácil's stated model is a bank partnership.
+  The partner's contractual role and each party's economic and compliance responsibilities
+  are not modeled or legally verified.
 
 ## Unit economics and break-even
-These are assumption-based planning estimates, not verified operating results. The
-calculations below are generated in the `PagaFacil_Financial_Model.xlsx` workbook; they
-remain assumption-based estimates, not verified operating results.
+These are assumption-based portfolio-level planning estimates, not verified operating
+results or PagaFácil standalone financials. The calculations below are generated in the
+`PagaFacil_Financial_Model.xlsx` workbook. They assume the modeled loan portfolio retains
+the listed interest and merchant-fee revenue and bears the listed funding cost and loss
+proxy. The bank-partner contract may allocate each item differently.
 
 ### Inputs and definitions
-- Average ticket: $2,500 MXN (kept as a planning assumption, not a measured average).
+- Base planning ticket: $2,500 MXN. Ticket planning range: $2,500 to $4,000 MXN.
+  The range reflects the team's final design scenario and is consistent with the upper
+  purchase bands reported by the 25 interviews. It is not a measured average, a bookstore
+  sales average or a market estimate. $2,500 remains the central five-year P&L ticket.
 - Pricing: flat interest of 4% of original ticket per month of term.
 - Merchant fee: 4% of ticket; the funded merchant payout is 96% of ticket.
-- Cost of funds: 10% annual, applied monthly to the declining funded payout balance,
-  assuming equal principal repayment.
+- Portfolio cost of funds: 10% annual in the planning case, applied monthly to the declining
+  funded payout balance, assuming equal principal repayment. Banxico published TIIE at
+  28 days of 6.5147% on 2026-11-19. The 10% case is 3.4853 percentage points above that
+  public reference, not a quoted bank rate or a measured fintech borrowing spread. If the
+  bank partner owns and funds the receivable, this expense belongs in the bank's portfolio
+  economics unless the contract passes some or all of it through to PagaFácil.
 - Delinquency/loss proxy: 7% of balances in arrears. For this simplified model only, apply
   7% to the original ticket as a full, unrecovered loss per loan. This is not equivalent
   to a statistically measured probability of default or loss rate; actual default loss
   requires the balance definition, observation period, cure rate and recoveries.
-- Operating and credit-check cost: $40 per loan.
+- Portfolio operating and credit-check cost: $40 per loan; PagaFácil's share is unverified.
 - CAC: $200 per acquired customer.
 - Conservative customer activity case: 1 loan per year for 4 years, or 4 lifetime loans per
   customer. This is a team-selected planning assumption, not measured repeat behavior.
-- Year 1 team operating costs before the potential official fee and private legal/compliance
-  scenario are $120,000: $25,000 personnel, $45,000 one-time technology setup, $25,000
-  recurring technology, and $25,000 office costs. Personnel, office and recurring technology
-  are modeled at the same amounts in Years 2 to 5. The workbook scenario adds a potential
-  $34,229.19 official technical-opinion fee in Year 1, $60,000 one-time private legal counsel
-  in Year 1, and $30,000 annual ongoing compliance costs in Years 1 to 5. The legal and
-  compliance amounts are unverified assumptions, not quotes; they are midpoints of the
-  $40,000 to $80,000 and $20,000 to $40,000 ranges below and remain TODO-verify. This makes
-  modeled Year 1 fixed/legal/regulatory costs $244,229.19 and modeled recurring costs
-  $105,000 annually. The official fee's applicability and renewal frequency remain
-  TODO-verify. Year 1 includes one-time costs and must not be used as a recurring
-  steady-state cost budget.
+- Team-estimated internal costs are $120,000 in Year 1: $25,000 personnel, $45,000 one-time
+  technology setup, $25,000 recurring technology, and $25,000 office costs. Personnel,
+  office and recurring technology are held constant in Years 2 to 5. These are team estimates,
+  not quotes. SOFOM-specific technical-opinion fees and the previous SOFOM legal/compliance
+  estimates have been removed from the current bank-partner case. The workbook's
+  `Bank Partner Economics` sheet collects PagaFácil's contracted compensation and allocated
+  funding, loss, servicing, partner, legal and compliance costs. Its company P&L, EBITDA and
+  break-even stay blank until these required inputs are supported by the executed agreement
+  or written quotes. A confirmed zero must be entered as zero; blank means unknown.
 
 For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of funds `r`:
 - Interest = `P × 4% × n`.
@@ -134,76 +145,53 @@ For ticket `P`, term `n` months, delinquency/loss proxy `d`, and annual cost of 
   year = `$200 / 1 = $200`.
 - Steady-state CAC allocated per loan, if customers take 1 loan per year for 4 years =
   `$200 / 4 = $50`.
-- For either horizon, contribution after CAC allocation = contribution before CAC minus
-  the applicable CAC per loan.
-- Year 1 cost-recovery loans = ceiling(`$244,229.19 / contribution after CAC allocation`).
-  There is no finite break-even if contribution after CAC allocation is zero or negative.
-  Steady-state cost-recovery loans = ceiling(`$105,000 / contribution after steady-state
-  CAC allocation`). The recurring-cost input includes the unverified $30,000 annual
-  compliance assumption and excludes one-time setup, private counsel, and the potential
-  official fee; it is a scenario, not an observed operating budget.
-- Lifetime contribution before CAC = contribution before CAC × 4 loans. LTV/CAC is
-  lifetime contribution before CAC divided by $200; this excludes fixed costs and should
-  not be interpreted as net profit.
-- Annual ARPU = modeled annual revenue divided by modeled active customers. Under the
-  current forecast this is $700 MXN per active customer per year ($70,000 / 100 in Year 1).
-  It reflects the one-loan-per-customer-per-year planning case, not observed customer
-  revenue.
-- Churn is not measured. The four-year customer life is an assumption and must not be
-  presented as an observed churn rate.
-- The six-month loan's estimated $415 contribution before CAC exceeds the $200 CAC
-  allocation, so one fully completed modeled loan covers CAC under these assumptions.
-  The exact payback month is not modeled because the workbook does not establish cash
-  timing by revenue/cost component or default recoveries.
+CAC allocation, lifetime contribution, LTV/CAC, payback, ARPU and break-even values are not
+PagaFácil company metrics until the bank agreement defines the revenue and cost allocation.
+The workbook's acquisition and repeat-use inputs remain planning scenarios, not observed
+performance.
 
-The $200 CAC allocation estimates first-year economics when each loan belongs to a newly
-acquired customer taking one loan that year. The $50 allocation spreads one customer's CAC
-across four assumed lifetime loans. Year 1 cost recovery uses the $244,229.19 planning
-scenario, including one-time setup, the potential official fee, private counsel, and annual
-compliance. It is not a recurring operating break-even. Steady-state cost recovery uses
-$105,000 of modeled recurring costs, including the unverified annual compliance assumption.
-Under this case, annual loan volume corresponds to annual customer-loans only if each
-customer takes one loan in that year.
+The workbook separates portfolio scenarios from company economics. `Unit Economics` and
+`Funding Benchmarks` show portfolio-level planning figures before bank settlement.
+`Bank Partner Economics` is the evidence-gated input sheet, and `P&L` calculates PagaFácil
+results only from those contractual compensation and cost-allocation inputs. Public APRs,
+benchmark interest rates and competitors' legal structures are not substitutes for those
+inputs.
 
-At the $2,500 ticket, 7% simplified loss proxy and current 4%-per-month-of-term pricing:
+At the $2,500 ticket, 7% simplified loss proxy and current pricing, the following is a
+portfolio-level scenario before CAC and before any settlement with the bank partner:
 
-| Term | Total interest | Effective annual rate (approx.) | Merchant fee | Cost of funds | Simplified expected loss | Operating cost | Contribution before CAC | After $200 first-year CAC allocation | First-year cost-recovery loans | After $50 steady-state CAC allocation | Steady-state cost-recovery loans |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 | -$55 | none | $95 | 1,106 |
-| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 | $215 | 1,136 | $365 | 288 |
-| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 | $485 | 504 | $635 | 166 |
-| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 | $755 | 324 | $905 | 117 |
+| Term | Total interest | Effective annual rate (approx.) | Merchant fee | Cost of funds at 10% | Simplified loss proxy | Servicing assumption | Portfolio contribution before CAC and partner settlement |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 3 months | $300 | ~98% | $100 | $40 | $175 | $40 | $145 |
+| 6 months | $600 | ~113% | $100 | $70 | $175 | $40 | $415 |
+| 9 months | $900 | ~116% | $100 | $100 | $175 | $40 | $685 |
+| 12 months | $1,200 | ~116% | $100 | $130 | $175 | $40 | $955 |
 
-At the 6-month base term, estimated lifetime contribution before CAC is `$415 × 4 =
-$1,660` per customer, and LTV/CAC is `$1,660 / $200 = 8.3x`, before fixed costs. With one
-loan per newly acquired customer in year one, the Year 1 cost-recovery estimate is 1,136
-six-month loans. Steady-state cost-recovery is 288 six-month loans under the $105,000
-recurring-cost scenario. The Year 1 $244,229.19 total includes $45,000 of one-time
-technology setup, a potential official fee, and unverified legal/compliance assumptions, so
-its recovery volume is not a recurring operating target.
+These are not revenues or profits attributable to PagaFácil. If the bank retains the loan
+asset and funds it, the partner may retain interest revenue, bear funding costs and credit
+losses, and pay PagaFácil a contractually defined fee. The workbook therefore leaves
+company valuation and break-even pending rather than assigning a fictitious revenue share.
 
 ### Default/delinquency sensitivity
 The following scenarios use the same simplified full-loss proxy on original ticket,
-allocate $200 CAC per first-year loan, and hold Year 1 fixed costs at $244,229.19,
-including the potential official fee and unverified legal/compliance assumptions. They are
-scenarios, not observed default rates. The word "none" means no finite break-even under
-the assumptions.
+but show only portfolio contribution before CAC and before bank-partner settlement. They
+are sensitivity cases, not observed default rates or PagaFácil loss forecasts.
 
 | Term | 5% proxy | 7% proxy | 10% proxy | 13% proxy |
 |---|---:|---:|---:|---:|
-| 3 months | none | none | none | none |
-| 6 months | 922 loans | 1,136 loans | 1,745 loans | 3,758 loans |
-| 9 months | 457 loans | 504 loans | 596 loans | 730 loans |
-| 12 months | 304 loans | 324 loans | 360 loans | 404 loans |
+| 3 months | $195 | $145 | $70 | -$5 |
+| 6 months | $465 | $415 | $340 | $265 |
+| 9 months | $735 | $685 | $610 | $535 |
+| 12 months | $1,005 | $955 | $880 | $805 |
 
 ### Ticket sensitivity at 6 months and 7% proxy
 The $1,500 and $4,000 tickets are illustrative scenarios, not measured low/high averages.
 
-| Ticket | Contribution before CAC | After $200 first-year CAC allocation | First-year break-even loans |
-|---:|---:|---:|---:|
-| $1,500 | $233 | $33 | 7,401 |
-| $2,500 | $415 | $215 | 1,136 |
-| $4,000 | $688 | $488 | 501 |
+| Ticket | Portfolio contribution before CAC and partner settlement |
+|---:|---:|
+| $1,500 | $233 |
+| $2,500 | $415 |
+| $4,000 | $688 |
 
 - Effective annual rate: the annual rate at which the present value of equal monthly
   installments equals the price financed (a monthly IRR compounded to one year). Banxico
@@ -213,70 +201,162 @@ The $1,500 and $4,000 tickets are illustrative scenarios, not measured low/high 
   TODO-verify CAT calculation and disclosure rules with Condusef, including whether the
   Banxico draft changes published in November 2025 are in force.
 
-Validation status of the inputs (updated 2026-11-16; values remain assumptions unless a
+Validation status of the inputs (updated 2026-11-20; values remain assumptions unless a
 specific source and matching definition are documented):
 
 | Input | Current value | Status / source fit |
 |---|---:|---|
-| Average ticket | $2,500 | Assumption. Expansion reports Kueski/Amazon purchases from $299 to $5,000; this supports a possible market range, not a $2,500 average. |
-| UP CDMX student population | User-reported range of 15,469 to 16,500; 16,500 retained only as an unverified scenario input | Data México reports 14,693 enrollments for Universidad Panamericana overall in 2022, but not a current UP CDMX campus count. This does not verify the user-reported range or its scope. Do not present 16,500 as campus enrollment, eligible borrowers or a market ceiling. |
-| Student interviews | 10 finance students; around October, year not recorded | User-reported exploratory interviews. The majority reportedly lacked a credit card, but the exact count, question wording, sampling method, purchasing behavior and willingness to use PagaFácil were not recorded. Not representative and not evidence of market demand. |
-| Delinquency/loss proxy | 7% of balances | User-provided modeling assumption. The cited sources do not establish this as PagaFácil's default or net loss rate; proxy treatment is deliberately simplified and must be replaced with comparable portfolio data and recovery rates. |
+| Average ticket | $2,500 base; $2,500–$4,000 planning range | Planning scenario. Expansion reports Kueski/Amazon purchases from $299 to $5,000, but this does not validate a university average. The 25 interviews support $2,500–$4,000 as a product-design range, not as a statistical mean. |
+| UP CDMX student population | No verified 2026 UP CDMX count is available | Data México reports 14,693 enrollments for Universidad Panamericana overall in 2022 and 6,763 associated with Zacatecas / Benito Juárez, not the UP CDMX campus. Use neither figure as campus enrollment or TAM. |
+| Student interviews | 25 real interviews: 13 Finance and 12 Law | Recorded in the field questionnaire for 3rd to 5th semester students. The sample is a convenience sample, not representative demand evidence for the full UP student population. |
+| Delinquency/loss proxy | 7% of original ticket in the final planning scenario | Simplified portfolio sensitivity only. It is not a PD, LGD or measured PagaFácil loss rate and must not be presented as observed portfolio performance. |
 | Loans per customer | 4 lifetime, modeled as 1 per year for 4 years | Team-selected conservative assumption; actual repeat frequency is unknown. |
 | Customer lifetime | 4 years in this scenario | Implied by the 1-loan-per-year, 4-year planning case; actual retention is unknown. |
-| CAC | $200 per customer | Assumption; requires actual acquisition spending divided by new acquired customers. |
+| CAC | $200 per customer | Assumption; requires actual PagaFácil acquisition spending divided by new PagaFácil-acquired customers approved and funded. |
 | Customer acquisition forecast | About 100 new students in Year 1; 25 new students per year in Years 2 to 5 | Team-approved planning scenario, not a market forecast. At the assumed $200 CAC, acquisition expense is $20,000 in Year 1 and $5,000 per year in Years 2 to 5. This totals 200 new customers and $40,000 of acquisition expense over five years. |
 | Loan origination timing | 50% in January and 50% in August | Team-approved planning scenario for the cash model. With six-month loans and installments starting one month after origination, Year 1 collects 11/12 of its originations' contractual repayments; later years collect 11/12 of current-year and 1/12 of prior-year originations. These are scheduled amounts before missed-payment effects, not dated payment data. |
-| Funding mix | 60% debt; 40% equity | Team-approved illustrative split of required capital. Debt interest, term, fees, repayment schedule, and financing availability are not modeled, so this is not a validated funding plan. |
-| Operating and credit-check cost | $40 per loan | Assumption; obtain actual provider quotes and servicing cost breakdown. |
-| Fixed costs | $244,229.19 modeled Year 1 scenario: $120,000 team estimates, $34,229.19 potential official fee, $60,000 one-time legal assumption, and $30,000 annual compliance assumption | The fee schedule lists $34,229.19 for LFD Article 29 XXVI; CNBV's FAQ associates that fraction with the AML technical-opinion procedure but shows an outdated 2016 amount. Applicability and renewal frequency are TODO-verify. Legal and compliance amounts are unverified midpoints of the $40,000-$80,000 and $20,000-$40,000 ranges, not quotes. |
-| Cost of funds | 10% annual | Assumption; prior reference was 28-day TIIE at 6.5147% on 2026-11-06 (Banxico, DOF), not a lender quote. |
+| Funding mix / partner settlement | Not set | The 60% debt / 40% equity split was a prior standalone financing illustration and is superseded. The bank contract must define lender of record, receivable ownership, funds flow, fee sharing and loss allocation. |
+| Operating and credit-check cost | $40 per portfolio loan | Assumption; obtain actual provider quotes and confirm whether PagaFácil or the bank bears each cost. |
+| Fixed costs | $120,000 preliminary internal-cost estimate | Team estimates for personnel, technology and office only. The prior SOFOM technical-opinion fee and SOFOM legal/compliance estimates are excluded. Bank implementation, servicing, legal, compliance and settlement costs are unquoted; standalone P&L and break-even remain incomplete. |
+| Cost of funds | 10% annual portfolio scenario | Banxico's TIIE at 28 days was 6.5147% on 2026-11-19; 10% is 3.4853 percentage points higher. It is an uncontracted portfolio scenario, not PagaFácil's borrowing cost. If the bank owns and funds the loans, the bank's contract determines whether any funding cost is charged through to PagaFácil. |
+
+### Public household, risk and funding context
+
+The supplied source compilation reports from INEGI's 2024 ENIGH an average quarterly
+household current income of $77,864 MXN and quarterly household education and recreation
+spending of $4,593 MXN, equivalent to about $1,531 per month for that combined category.
+These are national household averages, not student income, discretionary income, campus
+spending or a purchase-ticket estimate. They do not validate the $2,500-$4,000 planning
+range.
+
+CONDUSEF/INEGI's ENSAFI 2023 reports that 36.2% of adults had some form of debt, 17.1%
+described their debt level as high or excessive, the average amount adults said they could
+pay toward debt monthly without compromising their assets was $2,777 MXN, and 38.8%
+reported being very worried when asking for a loan. These nationwide adult figures are
+context for affordability and borrower risk, not estimates for UP students or PagaFácil
+defaults. They caution against reading stated interest in a survey as demonstrated
+repayment capacity.
+
+For funding context as of 2026-11-19, Banxico reported CETES at 28 days of 6.19%, TIIE
+de fondeo at one day of 6.26%, and TIIE at 28 days of 6.5147%. These are sovereign or
+interbank reference rates, not a quoted BNPL credit facility. A commercial rate may also
+reflect spread, fees, term, utilization, collateral, servicing and risk allocation. The
+10% case is a team-selected sensitivity, not a verified spread over TIIE. The workbook
+shows the portfolio contribution sensitivity at the public rate benchmarks and at the
+10% and 12% planning cases.
+
+The supplied compilation also cites a 2.9%-3.5% bank consumer-credit IMOR range, but does
+not identify one exact CNBV table, portfolio definition and observation date for that
+range. It is not adopted as a verified benchmark. Even a correctly sourced sector IMOR
+would not be comparable to PagaFácil's 7% simplified loss proxy or a thin-file student
+portfolio.
+
+### Final evidence gap register
+
+The project is complete as an academic prototype. The following items remain required evidence if PagaFácil were to move beyond the prototype stage. They must not be described as verified project data.
+
+| Evidence needed | Required source or format | Definitive use |
+|---|---|---|
+| UP CDMX enrollment and eligibility | Official 2026 student or campus record; exact year, campus and denominator | Define the campus population and eligible borrower count |
+| Merchant transaction distribution | Anonymized CSV/XLSX with ticket, count, frequency and merchant | Replace the MXN 2,500 central ticket and validate the MXN 2,500–4,000 range |
+| Merchant fees | Written MDR quote | Separate merchant economics from student interest and funding cost |
+| Bank-partner economics | Executed term sheet/contract showing lender of record, receivable owner, settlement, compensation, pass-through funding/loss costs and fees | Replace portfolio-only assumptions with PagaFácil revenue, expenses and funding allocation |
+| Origination, credit and payout costs | Provider quotes plus internal servicing time and cost | Replace the MXN 40 per-loan assumption |
+| CAC | Acquisition spend divided by approved and funded customers | Replace the MXN 200 CAC assumption |
+| Actual credit performance | Anonymized loan-level CSV by vintage, with 30+/90+ days past due, recoveries and terminations | Estimate PD, LGD and EAD by vintage |
+| Repeat use | Account-level loan count and time between loans | Replace the four-loan lifetime assumption |
+| Fixed legal and compliance costs | Bank agreement and written counsel/provider quotes; responsibility, scope and renewal period | Replace missing PagaFácil legal, compliance, servicing and partner-cost inputs |
 
 ### Reported population and interview evidence
 
-The initial geography is the Universidad Panamericana campus in Ciudad de México. The
-official [UP campus page](https://www.up.edu.mx/campus-up/cdmx/) confirms the campus
-location, but does not publish an enrollment count. The user supplied an approximate
-population range of 15,469 to 16,500 students; its source, year, campus scope and population
-definition were not provided. The official [Data México profile for Universidad
-Panamericana](https://www.economia.gob.mx/datamexico/en/profile/institution/universidad-panamericana)
-reports 14,693 enrollments for the university overall in 2022. It does not report a
-current UP CDMX campus count and does not verify the larger user-reported range. The
-different year, scope and population definition have not been reconciled. The 16,500
-workbook input is retained only to preserve a user-selected scenario, not as verified
-enrollment or a market ceiling. SEP publishes education statistics by state, but those
-aggregates do not verify UP CDMX enrollment or the number of eligible borrowers.
+The initial geography is the Universidad Panamericana campus in Ciudad de México. The official
+[UP campus page](https://www.up.edu.mx/campus-up/cdmx/) confirms the location, but does not
+publish an enrollment count. The official [Data México profile](https://www.economia.gob.mx/datamexico/es/profile/institution/universidad-panamericana)
+reports 14,693 matriculated students for Universidad Panamericana overall in 2022. The same
+profile associates 6,763 matriculated students with Zacatecas and the municipality of Benito
+Juárez, which is not a UP CDMX campus count. No 2026 UP CDMX enrollment figure has been
+published in the source used for the project.
 
-For continuity, the workbook's 100% adoption scenario uses the unverified 16,500 input,
-one $2,500 six-month loan per student per year, and current base-term pricing:
+The workbook does not use 6,763 or 16,500 as a market ceiling. It retains 14,693 only as
+an institution-wide 2022 context scenario. A hypothetical 100% adoption case is conditional
+portfolio volume and revenue before partner allocation:
 
-- Hypothetical annual financed volume = `16,500 × $2,500 × 1 loan = $41,250,000 MXN`.
+- Hypothetical annual financed volume = `14,693 × $2,500 × 1 loan = $36,732,500 MXN`.
 - Gross revenue per six-month loan = `$2,500 × 4% × 6 months + $2,500 × 4% merchant fee = $700 MXN`.
-- Hypothetical gross annual revenue = `16,500 × $700 = $11,550,000 MXN`.
+- Hypothetical gross annual revenue = `14,693 × $700 = $10,285,100 MXN`.
 
-These are conditional scenario outputs at 100% adoption, not TAM, SAM, verified population
-ceilings, eligible borrower counts, demand forecasts, or market-share claims. They do not
-account for student eligibility, income, credit approval, purchase frequency, interest in
-borrowing, or merchant participation.
+These outputs are not PagaFácil company revenue, TAM, SAM, eligible-borrower counts, demand
+forecasts or market-share claims. They exclude UP CDMX eligibility, income, purchase
+frequency, partner revenue allocation, borrowing interest, approval and merchant
+participation.
+
+The supplied source compilation also notes a 2024 UP-wide count of 16,967 (12,180
+undergraduate and 4,787 postgraduate), an undated historical mobile-site count of 7,550
+for CDMX, and an estimated 5,700–5,800 CDMX undergraduate students obtained by applying a
+2019 share of new entrants to the 2024 UP-wide undergraduate total. None is used as the
+current CDMX population: the first combines campuses, the second has no date, and the
+third applies an admissions flow share to a total enrollment stock. ANUIES provides an
+interactive historical enrollment query by institution, campus, year and level, but the
+current campus-level count was not confirmed in a publicly consolidated result.
+
+The real field evidence consists of 25 completed questionnaires: 13 Finance students and
+12 Law students, all in 3rd to 5th semester. This is a small convenience sample and may
+inform product design, but it does not estimate demand for the full UP population.
+
+Observed survey results include:
+
+- 48% reported no own formal credit history.
+- 88% accepted a Buró of Crédito consultation.
+- 76% accepted interest if the total cost was transparent.
+- 92% preferred a 3-month or 6-month term.
+- 88% preferred SPEI or automatic debit for payment.
+- 36% reported a typical purchase of $1,500 to $2,499 and 24% reported $2,500 to $3,999.
+
+The $2,500 central planning ticket is consistent with the survey distribution. The full
+scenario range is $2,500 to $4,000 MXN. It is selected for sensitivity and product
+design, not calculated as the arithmetic average of all interview answers.
 
 The five-year forecast's active customers of 100, 125, 150, 175 and 100 correspond to
-approximately 0.61%, 0.76%, 0.91%, 1.06% and 0.61% of the 16,500 scenario input,
-respectively. These ratios compare a planning forecast with an unverified user-reported
-input; they are not observed penetration or market share.
+approximately 0.68%, 0.85%, 1.02%, 1.19% and 0.68% of the 14,693 institution-wide context
+scenario, respectively. These ratios are a planning comparison, not penetration, market share
+or verified UP CDMX demand.
 
-The user also reported 10 exploratory interviews with finance students around October; the
-year was not recorded. The majority reportedly did not have a credit card. The exact
-count, interview questions, sample-selection method, purchase behavior and willingness to
-use PagaFácil were not captured. This limited convenience sample cannot establish demand,
-representativeness or product-market fit.
+The 25 real interviews comprise 13 Finance and 12 Law students in 3rd to 5th semester.
+Their results support product hypotheses: thin-file origin, 3/6-month terms and digital
+payment channels. The sample is a convenience sample and cannot establish demand,
+representativeness or product-market fit for the full UP population.
+
+### Public competitor reference
+
+Kueski Pay and Aplazo remain competitors because they solve a similar customer and
+merchant financing problem. Their entity structure can differ from PagaFácil's bank
+partnership, so they are product and market benchmarks, not direct funding-cost or
+portfolio-risk comparables.
+
+| Comparator | Publicly verified reference | Final PagaFácil use |
+|---|---|---|
+| Kueski Pay / Kueski | Kueski's official terms identify Kueski, S.A.P.I. de C.V., SOFOM E.N.R. Its current consumer-loan disclosure lists MXN 60–26,500, 99–180 days and 0%–486% APR. A disclosed example is MXN 1,000 repaid as MXN 1,101.87, including VAT on interest, over five fortnights; its CAT of 153.31% is dated 2026-03-02. Those terms describe Kueski credit, not necessarily every Kueski Pay checkout offer. Kueski Pay's current site is promotion-led; selected promotions display minimum baskets such as MXN 1,500. | Retain Kueski as a competitor and use public offers to compare product access, basket thresholds and user-facing cost. Keep Kueski personal-loan terms separate from Kueski Pay BNPL offers. Never use its APR/CAT as PagaFácil pricing or its entity form as a funding-cost proxy. |
+| Kueski Pay / Amazon | A secondary 2024 report described purchases of MXN 299–5,000 and installment options at Amazon. It is historical and does not establish a current universal limit or average purchase. | Ecommerce price-range context only. It does not validate UP student purchases or the MXN 2,500–4,000 planning scenario. |
+| Aplazo | Its current merchant directory shows store-specific plans; examples include 1–5 payments with no customer commission. The page does not establish one universal plan, a general MXN 5,000 threshold, or a merchant MDR. | Compare actual checkout terms by merchant. Do not generalize a featured store offer, copy a fee, or treat "sin comisión" as no merchant cost. |
+| Mercado Pago / Mercado Crédito | Public pages reviewed do not provide one universal BNPL ticket, merchant discount rate or user cost comparable to this prototype. | Do not use card-processing fees or generic Mercado Pago terms as PagaFácil MDR or user cost. |
+
+The Kueski public product disclosures reviewed do not provide a verifiable funding rate,
+unit-economics statement or vintage loss table. The user APR/CAT is the price charged to
+borrowers, not Kueski's cost of funds. Do not infer cost of capital, PD, LGD or EAD from
+those consumer terms. The CNBV consumer-credit IMOR range in the supplied compilation is
+excluded until its exact table, portfolio and date are cited; it would still be sector
+context rather than Kueski or PagaFácil performance.
+
+The $2,500–$4,000 university purchase range is a team planning scenario. The 25
+interviews support product design and upper purchase bands, but they are a convenience
+sample and do not calculate a market average.
 
 ## Regulatory notes
-Checked on 2026-11-11 against the public pages listed under Sources. Only the search
-snippets of these pages were read, not the full legal text, so a fintech lawyer should
-still confirm them.
+PagaFácil's current stated plan is a fintech working with a bank, not a SOFOM E.N.R.
+The SOFOM-specific material below is retained only as historical background. It does not
+determine the bank partner's legal role, responsibilities, or PagaFácil's obligations.
+Those require review of the actual agreement and qualified counsel; this is not legal advice.
 
-Sourced:
-## Regulatory notes
 Checked on 2026-11-15. The text of LGOAAC articles 56, 87-B and 87-P was read in full
 (Camara de Diputados text, last reform DOF 2025-11-14, read through the mLey.mx mirror).
 Banxico Circular 21/2009 was identified from the DOF and Banxico pages. A fintech lawyer
@@ -303,18 +383,39 @@ Sourced:
 - CNBV FAQ for SOFOM E.N.R. associates LFD article 29, fraction XXVI with the AML
   technical-opinion procedure, but its displayed $21,292 MXN fee is for fiscal year 2016
   and is outdated. The official 2026 update of amounts lists $34,229.19 for that fraction.
-  The model treats this as a potential Year 1 application fee; TODO-verify applicability
-  and renewal frequency with legal counsel.
+  This fee has been removed from the current bank-partner financial model. Do not include
+  it as a PagaFácil cost unless counsel confirms a specific applicable process.
 
-Not verified (no official source found; these stay as assumptions, TODO-verify with a
-fintech lawyer):
-- Registration timeline (3 to 4 months) and legal cost range ($40,000 to $80,000 MXN).
-- AML/PLD compliance cost ($20,000 to $40,000 MXN per year).
+SOFOM registration timeline, SOFOM-specific legal costs and AML/PLD costs are not inputs
+to the current plan. Bank partnership implementation, allocation of compliance
+responsibilities and any partner charges remain subject to the actual contract and quotes.
 
 ## Sources
 Existing regulatory and market references:
 - Secretaría de Economía, Data México, Universidad Panamericana profile (14,693 university-wide enrollments in 2022; not a current campus-specific count):
   https://www.economia.gob.mx/datamexico/en/profile/institution/universidad-panamericana
+- ANUIES, Historical Higher Education Statistical Yearbook query:
+  https://anuario.anuies.mx/
+- Universidad Panamericana, CDMX campus locations:
+  https://www.up.edu.mx/campus-up/cdmx/
+- INEGI, ENIGH 2024:
+  https://www.inegi.org.mx/programas/enigh/nc/2024/
+- CONDUSEF/INEGI, ENSAFI 2023 summary:
+  https://www.gob.mx/condusef/prensa/encuesta-nacional-sobre-salud-financiera-ensafi-2023
+- Banco de México, SIE TIIE and TIIE de fondeo:
+  https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=18&accion=consultarCuadro&idCuadro=CF111&locale=es
+- Banco de México, SIE CETES auctions:
+  https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=22&accion=consultarCuadro&idCuadro=CF107&locale=es
+- Kueski Pay, current offers:
+  https://www.kueskipay.com/
+- Kueski, current terms and consumer-loan disclosure:
+  https://www.kueskipay.com/tyc
+- Aplazo, merchant-specific plans:
+  https://aplazo.mx/comercios
+- CNBV, Portafolio de Información:
+  https://www.cnbv.gob.mx/Paginas/Informacion-Estadistica.aspx
+- Buró de Crédito:
+  https://www.burodecredito.com.mx/
 - CONDUSEF, SIPRES: https://webapps.condusef.gob.mx/SIPRES/jsp/index.jsp
 - CONDUSEF, Sofomes booklet: https://www.condusef.gob.mx/documentos/111134_CUADERNOSYVIDEOS-SOFOMES.pdf
 - gob.mx, Sofomes No Reguladas: https://www.gob.mx/cms/uploads/attachment/file/109296/Sofomes_No_Reguladas.pdf
@@ -331,23 +432,18 @@ Additional sources provided for market context (they do not independently verify
 financial-model inputs above):
 - Expansion, 2024-02-15, Kueski/Amazon payment options and reported purchase range
   ($299-$5,000): https://expansion.mx/economia/2024/02/15/kueski-meses-sin-intereses-amazon
-- CONDUSEF, ENSAFI 2023 summary: https://www.gob.mx/condusef/prensa/encuesta-nacional-sobre-salud-financiera-ensafi-2023
 - INEGI, ENSAFI 2023 results presentation (PDF):
   https://www.inegi.org.mx/contenidos/programas/ensafi/2023/doc/ensafi_2023_presentacion_resultados.pdf
 - Kueski, company information (company-published):
   https://www.kueski.com/sobre-nosotros
-- DPL News link provided for the Kueski/Amazon BNPL item:
-  https://dplnews.com/kueski-llega-3-millones-bnpl-amazon/
-  The URL currently opens an unrelated Nu customer-growth article; verify/correct the
-  link before treating it as evidence.
-
 The Expansion article gives a reported transaction range, not an observed $2,500 average
-ticket. ENSAFI provides population-level financial-health context, not PagaFácil borrower
-default data. Kueski's own site is company-reported information. None of these sources
-substantiates the 7% delinquency/loss proxy, four lifetime loans, customer-acquisition
-scenario, $200 CAC, $40 operating cost or team fixed-cost estimates; those remain planning
-inputs. The official fee amount does not establish private legal or ongoing compliance
-costs.
+ticket. ENIGH and ENSAFI provide household- or adult-population context, not student-specific
+income, spending or PagaFácil borrower performance. Kueski's own site is company-reported
+product information; it does not disclose its funding rate or vintage loss table in the
+sources reviewed. None of these sources substantiates the 7% delinquency/loss proxy, four
+lifetime loans, customer-acquisition scenario, $200 CAC, $40 operating cost or team fixed-cost
+estimates; those remain planning inputs. The official SOFOM fee amount does not establish
+PagaFácil's bank-partner legal, settlement or compliance costs.
 
 ### Public BNPL valuation references screened on 2026-11-16
 
@@ -370,17 +466,14 @@ These are equity market capitalization-to-revenue observations, not enterprise
 value-to-revenue multiples. The companies are established public U.S. lenders with
 different scale, geography, customer base, product mix, reported revenue definitions and
 operating history. PagaFácil is a Mexican student-lending prototype without validated
-originations or revenue. The user requested an illustrative academic valuation scenario.
-The workbook uses 1.0x revenue and terminal multiples, a 35% annual discount rate and a
-50% VC target annual return, with one-input-at-a-time sensitivity ranges. These are
-scenario inputs selected for illustration, not market-derived assumptions, direct
-comparables or a fair-market valuation; the public-company observations are not copied
-into them. Under the base case, the revenue-multiple method gives about $15,611 MXN
-pre-money, while the VC and simplified EBITDA DCF methods give negative outputs. Those
-negative results mean the methods do not support a positive pre-money value under these
-inputs, not that PagaFácil has negative fair value. Investor ownership is calculated from
-the modeled 40% equity share of required capital, not the total debt-plus-equity funding
-need. The model's DCF remains a simplified EBITDA proxy, not a full DCF.
+originations or revenue. The 1.0x revenue and terminal multiples, 35% annual discount
+rate and 50% VC target annual return remain illustrative workbook inputs only; they are
+not market-derived assumptions or fair-market valuation. The earlier outputs, including
+the approximately $15,611 MXN revenue-multiple result and negative VC/EBITDA-DCF results,
+are superseded and must not be presented as PagaFácil valuation. The bank-partner contract
+does not yet define PagaFácil net revenue, partner settlement or required capital, so
+valuation outputs are pending. The workbook's earlier 60% debt / 40% equity funding split
+is also superseded. The simplified EBITDA method is not a full DCF.
 
 Primary sources:
 - Affirm FY2026 Form 10-K:
@@ -410,6 +503,7 @@ Primary sources:
 | 2026-11-16 | Added the approved 50% January and 50% August origination scenario to the six-month cash model | Calculates annual scheduled collections while carrying the final August installment into the following year; missed-payment effects and intra-year liquidity remain simplified | Najhid + Luciano |
 | 2026-11-16 | Set the illustrative funding split to 60% debt and 40% equity | Allocates the required raise by source only; debt service and financing terms remain unmodeled, so the split is not a financing plan | Najhid + Luciano |
 | 2026-11-16 | Screened Affirm and Sezzle public-market data but left workbook valuation multiples and rates blank | Their market-capitalization/revenue ratios are not direct comparables for the Mexican student prototype and do not match the workbook's enterprise-value-like formula basis | Najhid + Luciano |
+| 2026-11-20 | Connected the company P&L to explicit bank-partner compensation and cost-allocation inputs | The workbook separates portfolio scenarios from PagaFácil economics and leaves company outputs blank until contract terms and written cost quotes are available |
 - LGOAAC, official text: https://www.diputados.gob.mx/LeyesBiblio/pdf/LGOAAC.pdf
 - Banxico, Circular 21/2009 (CAT): https://www.banxico.org.mx/marco-normativo/normativa-emitida-por-el-banco-de-mexico/circular-21-2009/costo-anual-total-disposicion.html
 - Banxico report to Congress, 2026-09-14: https://gaceta.diputados.gob.mx/PDF/66/2026/sep/Banxico-20260914.pdf

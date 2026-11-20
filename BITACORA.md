@@ -12,6 +12,12 @@ Template:
 
 ---
 
+## 2026-11-20 · Najhid + Luciano
+- Goal: close the final market, interview and evidence-gap documentation for the BNPL prototype.
+- AI did: Copilot finalized the MXN 2,500 central ticket, MXN 2,500–4,000 planning range, public Kueski Pay/Aplazo references, workbook evidence registers and the 25-interview source classification.
+- We decided: retain 14,693 only as institution-wide 2022 context, keep the ticket range as an unmeasured planning scenario, and classify remaining operational inputs as evidence requirements rather than project facts.
+- Reviewer flags: no unresolved formula failures; 69 tests pass after the final workbook updates.
+
 ## 2026-11-03 · Najhid + Luciano
 - Goal: restart the project with a clean structure: fix the unit economics and write the SPEC and AGENTS files for PagaFácil (BNPL for university students).
 - AI did: Claude (claude.ai, agent mode an Copilot agent mode) reviewed our deck and the course templates, found inconsistencies in the numbers (payback, ARPU, flat 2% monthly rate), recomputed effective annual rates and contribution per loan, and drafted SPEC.md and AGENTS.md. Copilot suggested the commit message for the SPEC.
@@ -153,3 +159,22 @@ Template:
 - We decided: keep the one-role flow defined in SPEC.md. The student sees the offer and the server applies the automatic rule-based approval; signing in as León is only how the invented demo account is shown. No staff dashboard or manual underwriting flow was added.
 - Reviewer flags: none. Initial UI tests identified existing text contracts; the revised labels preserve them. Validation passed with 69 tests, and Flask serves the CSS and logo successfully.
 - Pending: inspect the screens in the browser and get Luciano's review before merging or presenting the visual change.
+
+## 2026-11-20 · Najhid + Luciano
+- Goal: finalize the market and interview data for the course submission.
+- AI did: replaced the 16,500 and 10-interview scenarios with the official Data México institution-wide 2022 population figure of 14,693, the 25 real questionnaires, and the Kueski Pay and valuation conclusions supported by the course materials and public sources. Updated the workbook's population context, assumptions labels and expected financed-volume and revenue figures.
+- We decided: no UP CDMX 2026 enrollment figure is available in the source reviewed, so the project will not present 6,763 or 14,693 as verified campus enrollment or TAM. The 25 interviews are real but limited to Finance and Law students in 3rd to 5th semester; they support product hypotheses only. The $2,500 ticket remains a planning assumption rather than an observed average.
+- Reviewer flags: none for the finalized market labeling. The workbook formulas continue to use 14,693 only for a 100%-adoption context scenario.
+- Validation: 69 tests pass, including workbook formula evaluation and the 14,693 population scenario.
+
+## 2026-11-20 · Najhid + Copilot
+- Goal: incorporate the supplied external-data compilation, keep Kueski as a competitor, and correct the financial model for PagaFácil's bank-partner structure.
+- AI did: read the supplied report, checked the ENIGH 2024 values against INEGI, verified November 19 CETES/TIIE references in Banxico, reviewed current Kueski and Aplazo public product disclosures, and updated SPEC.md, README.md, DECISIONS.md and the financial workbook. It separated Kueski Pay from Kueski personal-loan pricing, added portfolio funding sensitivity, and removed the SOFOM fee and old capital split from the active bank-partner scenario.
+- We decided: retain Kueski as a product/market competitor, not as a source of PagaFácil funding cost or credit-loss data. Keep portfolio-level loan economics as scenarios; do not report company EBITDA, break-even or valuation until the bank agreement defines revenue, funding and loss allocation and partner costs.
+- Reviewer flags: the supplied 2.9%-3.5% bank-consumer IMOR range has no exact CNBV table, portfolio and observation date in the report, so it was excluded. The UP CDMX population estimates derived from new-entry shares or an undated mobile-page count were also excluded.
+
+## 2026-11-20 · Najhid + Copilot
+- Goal: finish wiring PagaFácil company economics to the bank-partner agreement inputs.
+- AI did: updated the workbook P&L to calculate company compensation, allocated variable costs, partner/legal costs, contribution, EBITDA and status only from explicit bank-partner inputs; kept company break-even and valuation pending; documented formulas and added a populated-input formula test. Updated SPEC.md, README.md, DECISIONS.md and this log, and removed the unusable DPL News link from the source list.
+- We decided: portfolio interest, merchant fees and public funding benchmarks remain sensitivity context, not PagaFácil revenue or funding costs. Unknown fields stay blank; a confirmed zero must be entered explicitly.
+- Reviewer flags: no separate reviewer run. The complete test suite passes: 70 tests.
