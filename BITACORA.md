@@ -178,3 +178,9 @@ Template:
 - AI did: updated the workbook P&L to calculate company compensation, allocated variable costs, partner/legal costs, contribution, EBITDA and status only from explicit bank-partner inputs; kept company break-even and valuation pending; documented formulas and added a populated-input formula test. Updated SPEC.md, README.md, DECISIONS.md and this log, and removed the unusable DPL News link from the source list.
 - We decided: portfolio interest, merchant fees and public funding benchmarks remain sensitivity context, not PagaFácil revenue or funding costs. Unknown fields stay blank; a confirmed zero must be entered explicitly.
 - Reviewer flags: no separate reviewer run. The complete test suite passes: 70 tests.
+
+## 2026-11-20 · Najhid + Copilot
+- Goal: deliver the project handoff to Luciano without keeping a handoff document in the repository.
+- AI did: saved the five-page evidence and next-steps PDF to the local Downloads folder and removed the previously versioned PROJECT_HANDOFF.md in a separate pull request.
+- We decided: keep the handoff PDF local; do not change financial assumptions or add the PDF to the repository.
+- Reviewer flags: documentation-only change; the financial test suite most recently passed all 70 tests.
